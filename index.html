@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nícol Dreams - Inteligencia de Compras & Joyería</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .silver-glass { background: rgba(13, 17, 23, 0.85); backdrop-filter: blur(16px); border: 1px solid rgba(226, 232, 240, 0.12); }
+        .silver-gradient { background: linear-gradient(135deg, #161b22 0%, #0d1117 100%); }
+        @media print {
+            header, form, button, .no-print { display: none !important; }
+            body { background: white !important; color: black !important; }
+            .silver-gradient { background: white !important; border: 1px solid #ccc !important; }
+            .text-slate-100, .text-white, .text-slate-300 { color: black !important; }
+        }
+    </style>
+</head>
+<body class="bg-[#07090E] text-slate-100 min-h-screen pb-24 md:pb-12">
+
+    <header class="border-b border-slate-800/80 sticky top-0 z-50 silver-glass">
+        <div class="max-w-7xl mx-auto px-4 md:px-8 py-3.5 flex items-center justify-between">
+            <div class="flex items-center gap-3.5">
+                <div class="w-12 h-12 rounded-2xl bg-[#111622] border border-slate-700/60 p-1.5 flex items-center justify-center shadow-xl">
+                    <img src="logo.png" alt="Nícol Dreams Logo" class="w-full h-full object-contain rounded-xl">
+                </div>
+                <div>
+                    <h1 class="text-base font-extrabold text-slate-100 tracking-wider">NÍCOL DREAMS</h1>
+                    <p class="text-[10px] text-slate-400 font-medium tracking-widest uppercase">Optimización Presupuestaria & Rotación • Cusco</p>
+                </div>
+            </div>
+            <button onclick="window.print()" class="no-print bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 px-3.5 py-2 rounded-xl text-xs flex items-center gap-2 transition">
+                <i class="fa-solid fa-print"></i> <span class="hidden sm:inline">Orden de Compra</span>
+            </button>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 md:px-8 mt-8 space-y-8">
+
+        <!-- KPIs Financieros -->
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="silver-gradient border border-slate-800/80 rounded-3xl p-5 shadow-2xl">
+                <div class="text-[11px] text-slate-400 font-semibold uppercase tracking-wider mb-1">Capital Disponible</div>
+                <div class="text-2xl sm:text-3xl font-black text-slate-100" id="kpiPresupuesto">S/. 4,000.00</div>
+                <div class="text-[10px] text-slate-400 mt-1">Presupuesto de inversión</div>
+            </div>
+            <div class="silver-gradient border border-slate-800/80 rounded-3xl p-5 shadow-2xl">
+                <div class="text-[11px] text-slate-400 font-semibold uppercase tracking-wider mb-1">Inversión Ejecutada</div>
+                <div class="text-2xl sm:text-3xl font-black text-emerald-400" id="kpiGastado">S/. 0.00</div>
+                <div class="text-[10px] text-slate-400 mt-1">Optimizado por rotación</div>
+            </div>
+            <div class="silver-gradient border border-slate-800/80 rounded-3xl p-5 shadow-2xl">
+                <div class="text-[11px] text-slate-400 font-semibold uppercase tracking-wider mb-1">Saldo Remanente</div>
+                <div class="text-2xl sm:text-3xl font-black text-amber-400" id="kpiSobrante">S/. 0.00</div>
+                <div class="text-[10px] text-slate-400 mt-1">Caja chica disponible</div>
+            </div>
+            <div class="silver-gradient border border-slate-800/80 rounded-3xl p-5 shadow-2xl">
+                <div class="text-[11px] text-slate-400 font-semibold uppercase tracking-wider mb-1">Total Joyas</div>
+                <div class="text-2xl sm:text-3xl font-black text-slate-200" id="kpiPiezas">0 <span class="text-xs font-normal text-slate-400">unid.</span></div>
+                <div class="text-[10px] text-slate-400 mt-1">Ingreso a tienda virtual</div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+
+            <!-- Columna Izquierda: Registro de Proveedor con Nivel de Rotación -->
+            <div class="lg:col-span-5 space-y-6 no-print">
+                <div class="silver-gradient border border-slate-800/80 rounded-3xl p-6 shadow-2xl">
+                    <h2 class="text-sm font-bold text-slate-100 mb-5 flex items-center gap-2.5">
+                        <span class="w-8 h-8 rounded-xl bg-slate-800 text-slate-200 flex items-center justify-center text-xs border border-slate-700"><i class="fa-solid fa-gem"></i></span>
+                        Registrar Especialidad de Taller
+                    </h2>
+                    
+                    <form id="formProveedor" class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-400 mb-1.5">Nombre del Taller / Artesano</label>
+                            <input type="text" id="nombreProv" required class="w-full bg-[#07090E] border border-slate-800 rounded-2xl px-4 py-3 text-xs text-slate-100 focus:border-slate-400 focus:outline-none" placeholder="Ej. Juan (Orfebre San Blas)">
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-400 mb-1.5">Categoría de Joya</label>
+                                <select id="tipoJoya" class="w-full bg-[#07090E] border border-slate-800 rounded-2xl px-3 py-3 text-xs text-slate-100 focus:border-slate-400 focus:outline-none">
+                                    <option value="Aretes">Aretes</option>
+                                    <option value="Pulseras">Pulseras</option>
+                                    <option value="Anillos">Anillos</option>
+                                    <option value="Collares">Collares</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-400 mb-1.5">Material y Pureza</label>
+                                <select id="materialPureza" class="w-full bg-[#07090E] border border-slate-800 rounded-2xl px-3 py-3 text-xs text-slate-100 focus:border-slate-400 focus:outline-none">
+                                    <option value="Plata Ley 950">Plata Ley 950</option>
+                                    <option value="Plata 925">Plata 925</option>
+                                    <option value="Oro 18K">Oro 18K</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-400 mb-1.5">Grabado</label>
+                                <select id="conGrabado" class="w-full bg-[#07090E] border border-slate-800 rounded-2xl px-3 py-3 text-xs text-slate-100 focus:border-slate-400 focus:outline-none">
+                                    <option value="Sin Grabado">Sin Grabado</option>
+                                    <option value="Incluido">Incluido</option>
+                                    <option value="Personalizado">Personalizado</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-400 mb-1.5">Nivel de Venta (1-10)</label>
+                                <input type="number" min="1" max="10" value="8" id="nivelRotacion" required class="w-full bg-[#07090E] border border-slate-800 rounded-2xl px-3 py-3 text-xs text-amber-400 font-bold focus:border-slate-400 focus:outline-none" title="10 = Se vende muy rápido / Alta calidad">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-400 mb-1.5">Stock Máx. (Piezas)</label>
+                                <input type="number" min="1" id="capacidadProv" required class="w-full bg-[#07090E] border border-slate-800 rounded-2xl px-3 py-3 text-xs text-slate-100 focus:border-slate-400 focus:outline-none" placeholder="Ej. 30">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-400 mb-1.5">Costo Unitario (S/.)</label>
+                                <input type="number" step="0.01" min="0.01" id="costoProv" required class="w-full bg-[#07090E] border border-slate-800 rounded-2xl px-3 py-3 text-xs text-slate-100 focus:border-slate-400 focus:outline-none" placeholder="Ej. 45.00">
+                            </div>
+                        </div>
+
+                        <button type="submit" class="w-full bg-slate-200 hover:bg-white text-slate-950 font-bold py-3.5 px-4 rounded-2xl text-xs transition shadow-lg flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-plus"></i> Guardar Especialidad de Taller
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Columna Derecha: Motor Presupuestario y Matriz -->
+            <div class="lg:col-span-7 space-y-6">
+                
+                <!-- Simulador de Presupuesto y Porcentajes -->
+                <div class="silver-gradient border border-slate-800/80 rounded-3xl p-6 shadow-2xl no-print">
+                    <h2 class="text-sm font-bold text-slate-100 mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-sliders text-slate-300"></i> Distribución de Capital por Categoría
+                    </h2>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-5 gap-3 mb-4">
+                        <div class="sm:col-span-1">
+                            <label class="block text-[10px] text-slate-400 uppercase font-bold mb-1">Capital (S/.)</label>
+                            <input type="number" id="presupuestoInput" value="4000" class="w-full bg-[#07090E] border border-slate-700 rounded-xl px-3 py-2 text-xs font-bold text-emerald-400">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] text-slate-400 uppercase font-bold mb-1">% Aretes</label>
+                            <input type="number" id="pctAretes" value="70" min="0" max="100" class="pct-input w-full bg-[#07090E] border border-slate-800 rounded-xl px-3 py-2 text-xs font-bold text-slate-100">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] text-slate-400 uppercase font-bold mb-1">% Pulseras</label>
+                            <input type="number" id="pctPulseras" value="20" min="0" max="100" class="pct-input w-full bg-[#07090E] border border-slate-800 rounded-xl px-3 py-2 text-xs font-bold text-slate-100">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] text-slate-400 uppercase font-bold mb-1">% Anillos</label>
+                            <input type="number" id="pctAnillos" value="10" min="0" max="100" class="pct-input w-full bg-[#07090E] border border-slate-800 rounded-xl px-3 py-2 text-xs font-bold text-slate-100">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] text-slate-400 uppercase font-bold mb-1">% Collares</label>
+                            <input type="number" id="pctCollares" value="0" min="0" max="100" class="pct-input w-full bg-[#07090E] border border-slate-800 rounded-xl px-3 py-2 text-xs font-bold text-slate-100">
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between pt-2 border-t border-slate-800/80">
+                        <span id="sumaPorcentajeText" class="text-xs font-semibold text-emerald-400">Distribución Total: 100%</span>
+                        <button onclick="calcularCompraOptima()" class="bg-slate-200 hover:bg-white text-slate-950 font-bold px-5 py-2.5 rounded-xl text-xs transition shadow-md">
+                            Calcular Compra Inteligente
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Resultados de Asignación -->
+                <div class="silver-gradient border border-slate-800/80 rounded-3xl p-6 shadow-2xl">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-sm font-bold text-slate-100">Plan Óptimo de Adquisición (Calidad / Precio)</h3>
+                    </div>
+                    <div id="tablaMatriz" class="space-y-3">
+                        <p class="text-xs text-slate-500 italic text-center p-4">Calculando distribución...</p>
+                    </div>
+                </div>
+
+                <!-- Catálogo de Talleres y sus Puntuaciones -->
+                <div class="silver-gradient border border-slate-800/80 rounded-3xl p-6 shadow-2xl no-print">
+                    <h3 class="text-sm font-bold text-slate-100 mb-4">Rendimiento por Taller y Categoría</h3>
+                    <div id="listaProveedores" class="space-y-2.5"></div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const API_URL = `http://${window.location.hostname}:8000`;
+
+        // Validar suma de porcentajes en tiempo real
+        document.querySelectorAll('.pct-input').forEach(input => {
+            input.addEventListener('input', () => {
+                const suma = (parseFloat(document.getElementById('pctAretes').value) || 0) +
+                             (parseFloat(document.getElementById('pctPulseras').value) || 0) +
+                             (parseFloat(document.getElementById('pctAnillos').value) || 0) +
+                             (parseFloat(document.getElementById('pctCollares').value) || 0);
+                const label = document.getElementById('sumaPorcentajeText');
+                label.innerText = `Distribución Total: ${suma}%`;
+                label.className = suma === 100 ? "text-xs font-semibold text-emerald-400" : "text-xs font-semibold text-rose-400";
+            });
+        });
+
+        document.getElementById('formProveedor').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const data = {
+                nombre: document.getElementById('nombreProv').value.trim(),
+                tipo_joya: document.getElementById('tipoJoya').value,
+                material_pureza: document.getElementById('materialPureza').value,
+                con_grabado: document.getElementById('conGrabado').value,
+                capacidad: parseInt(document.getElementById('capacidadProv').value),
+                costo_unitario: parseFloat(document.getElementById('costoProv').value),
+                nivel_rotacion: parseInt(document.getElementById('nivelRotacion').value)
+            };
+
+            const res = await fetch(`${API_URL}/proveedores/`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+            if(res.ok) {
+                document.getElementById('formProveedor').reset();
+                cargarProveedores();
+            }
+        });
+
+        async function cargarProveedores() {
+            const res = await fetch(`${API_URL}/proveedores/`);
+            const proveedores = await res.json();
+            const contenedor = document.getElementById('listaProveedores');
+            
+            let html = '';
+            proveedores.forEach(p => {
+                html += `
+                <div class="bg-[#07090E] p-3.5 rounded-2xl border border-slate-900 flex items-center justify-between">
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-bold text-slate-100">${p.nombre}</span>
+                            <span class="bg-slate-800 text-slate-200 text-[10px] px-2 py-0.5 rounded-full">${p.tipo_joya}</span>
+                            <span class="bg-amber-500/10 text-amber-400 border border-amber-500/20 text-[10px] px-2 py-0.5 rounded-full font-bold">★ Rotación: ${p.nivel_rotacion}/10</span>
+                        </div>
+                        <p class="text-[11px] text-slate-400 mt-1">${p.material_pureza} • Stock máx: ${p.capacidad} unid.</p>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <span class="text-xs font-extrabold text-slate-100">S/. ${p.costo_unitario.toFixed(2)}</span>
+                        <button onclick="eliminarProveedor(${p.id})" class="text-slate-600 hover:text-rose-400 text-xs"><i class="fa-solid fa-trash"></i></button>
+                    </div>
+                </div>`;
+            });
+            contenedor.innerHTML = html;
+            calcularCompraOptima();
+        }
+
+        async function eliminarProveedor(id) {
+            await fetch(`${API_URL}/proveedores/${id}`, { method: 'DELETE' });
+            cargarProveedores();
+        }
+
+        async function calcularCompraOptima() {
+            const pAretes = parseFloat(document.getElementById('pctAretes').value) || 0;
+            const pPulseras = parseFloat(document.getElementById('pctPulseras').value) || 0;
+            const pAnillos = parseFloat(document.getElementById('pctAnillos').value) || 0;
+            const pCollares = parseFloat(document.getElementById('pctCollares').value) || 0;
+
+            if(pAretes + pPulseras + pAnillos + pCollares !== 100) {
+                alert("La suma de los porcentajes por categoría debe ser exactamente 100%.");
+                return;
+            }
+
+            const payload = {
+                presupuesto_total: parseFloat(document.getElementById('presupuestoInput').value) || 0,
+                porcentaje_aretes: pAretes,
+                porcentaje_pulseras: pPulseras,
+                porcentaje_anillos: pAnillos,
+                porcentaje_collares: pCollares
+            };
+
+            const res = await fetch(`${API_URL}/optimizar-presupuesto/`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+            const data = await res.json();
+
+            document.getElementById('kpiPresupuesto').innerText = `S/. ${data.presupuesto_asignado.toFixed(2)}`;
+            document.getElementById('kpiGastado').innerText = `S/. ${data.gasto_total_optimizado.toFixed(2)}`;
+            document.getElementById('kpiSobrante').innerText = `S/. ${data.saldo_sobrante.toFixed(2)}`;
+            document.getElementById('kpiPiezas').innerText = `${data.piezas_totales_adquiridas} unid.`;
+
+            let html = '';
+            data.plan_de_abastecimiento.forEach(item => {
+                html += `
+                <div class="bg-[#07090E] p-4 rounded-2xl border border-slate-900 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <h4 class="text-xs font-bold text-slate-100">${item.origen}</h4>
+                            <span class="text-[10px] bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2 py-0.5 rounded-full font-semibold">Rotación ${item.nivel_rotacion}/10</span>
+                        </div>
+                        <p class="text-[11px] text-slate-400 mt-1">Comprar: <strong class="text-slate-200">${item.tipo_joya}</strong> (${item.material_pureza})</p>
+                    </div>
+                    <div class="flex items-center justify-between sm:justify-end gap-6 border-t sm:border-t-0 pt-2 sm:pt-0 border-slate-900">
+                        <div class="text-left sm:text-right">
+                            <span class="font-bold text-slate-100 bg-slate-800 px-2.5 py-1 rounded-xl text-xs">${item.piezas_asignadas} piezas</span>
+                            <span class="text-[10px] text-slate-500 block mt-0.5">S/. ${item.costo_unitario.toFixed(2)} c/u</span>
+                        </div>
+                        <div class="text-right w-24">
+                            <span class="font-black text-emerald-400 text-sm">S/. ${item.subtotal.toFixed(2)}</span>
+                        </div>
+                    </div>
+                </div>`;
+            });
+            document.getElementById('tablaMatriz').innerHTML = html || '<p class="text-xs text-slate-500 text-center p-4">Presupuesto insuficiente o sin talleres en las categorías elegidas.</p>';
+        }
+
+        cargarProveedores();
+    </script>
+</body>
+</html>
