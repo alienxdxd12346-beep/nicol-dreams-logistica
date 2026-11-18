@@ -6,9 +6,11 @@ from database import SessionLocal, ProveedorDB, init_db
 
 app = FastAPI(title="Nícol Dreams - Optimización Financiera y Comercial", version="4.0")
 
+from fastapi.middleware.cors import CORSMiddleware
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["*"],  # Permite que GitHub Pages se conecte sin bloqueos
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
