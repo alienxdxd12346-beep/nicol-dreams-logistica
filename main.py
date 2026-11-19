@@ -1,139 +1,250 @@
 from fastapi import FastAPI, Depends, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
 from sqlalchemy.orm import Session
-from database import SessionLocal, ProveedorDB, init_db
+from pydantic import BaseModel
+from typing import List, Optional
+import database
 
-app = FastAPI(title="Nícol Dreams - Optimización Financiera y Comercial", version="4.0")
+database.crear_tablas()
 
-from fastapi.middleware.cors import CORSMiddleware
+app = FastAPI(title="Nícol Dreams - Logística y Tienda Virtual API")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Permite que GitHub Pages se conecte sin bloqueos
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-@app.on_event("startup")
-def startup_event():
-    init_db()
-    db = SessionLocal()
-    if db.query(ProveedorDB).count() == 0:
-        proveedores_iniciales = [
-            ProveedorDB(nombre="Juan (Orfebre San Blas)", tipo_joya="Aretes", material_pureza="Plata Ley 950", con_grabado="Sin Grabado", capacidad=35, costo_unitario=45.0, nivel_rotacion=9),
-            ProveedorDB(nombre="José (Taller Wanchaq)", tipo_joya="Aretes", material_pureza="Plata Ley 950", con_grabado="Sin Grabado", capacidad=40, costo_unitario=45.0, nivel_rotacion=6),
-            ProveedorDB(nombre="José (Taller Wanchaq)", tipo_joya="Pulseras", material_pureza="Plata 925", con_grabado="Incluido", capacidad=30, costo_unitario=60.0, nivel_rotacion=9),
-            ProveedorDB(nombre="Juan (Orfebre San Blas)", tipo_joya="Pulseras", material_pureza="Plata 925", con_grabado="Incluido", capacidad=25, costo_unitario=60.0, nivel_rotacion=5),
-            ProveedorDB(nombre="Asociación Plateros", tipo_joya="Anillos", material_pureza="Plata Ley 950", con_grabado="Personalizado", capacidad=20, costo_unitario=55.0, nivel_rotacion=8)
-        ]
-        db.add_all(proveedores_iniciales)
-        db.commit()
-    db.close()
-
 def get_db():
-    db = SessionLocal()
+    db = database.SessionLocal()
     try:
         yield db
     finally:
         db.close()
 
+# --- ESQUEMAS PYDANTIC ---
 class ProveedorCreate(BaseModel):
     nombre: str
     tipo_joya: str
     material_pureza: str
-    con_grabado: str
+    con_grabado: bool
     capacidad: int
     costo_unitario: float
-    nivel_rotacion: int
+    nivel_rotacion: int = 5
 
-class PresupuestoRequest(BaseModel):
-    presupuesto_total: float
-    porcentaje_aretes: float
-    porcentaje_pulseras: float
-    porcentaje_anillos: float
-    porcentaje_collares: float
+class ProductoCreate(BaseModel):
+    proveedor_id: int
+    nombre_modelo: str
+    categoria: str
+    material_pureza: str
+    foto_url: str
+    precio_venta: float
+    stock_inicial: int = 0
+
+class CompraCreate(BaseModel):
+    producto_id: int
+    cantidad: int
+
+class SimulacionRequest(BaseModel):
+    capital: float
+    pct_aretes: float
+    pct_pulseras: float
+    pct_anillos: float
+    pct_collares: float
+
+# --- DATOS INICIALES DE EJEMPLO ---
+@app.on_event("startup")
+def poblar_datos_iniciales():
+    db = database.SessionLocal()
+    if db.query(database.Proveedor).count() == 0:
+        t1 = database.Proveedor(
+            nombre="Taller Qorikancha Plata", tipo_joya="Anillos",
+            material_pureza="Plata Ley 950", con_grabado=True,
+            capacidad=40, costo_unitario=65.0, nivel_rotacion=9
+        )
+        t2 = database.Proveedor(
+            nombre="Artesanías San Blas Oro", tipo_joya="Anillos",
+            material_pureza="Oro 18k", con_grabado=True,
+            capacidad=20, costo_unitario=320.0, nivel_rotacion=8
+        )
+        t3 = database.Proveedor(
+            nombre="Orfebrería Valle Sagrado", tipo_joya="Collares",
+            material_pureza="Plata Ley 950", con_grabado=False,
+            capacidad=35, costo_unitario=95.0, nivel_rotacion=7
+        )
+        db.add_all([t1, t2, t3])
+        db.commit()
+
+        modelos_demo = [
+            database.Producto(
+                proveedor_id=t1.id, nombre_modelo="Anillo Solitario Andino",
+                categoria="Anillos", material_pureza="Plata Ley 950",
+                foto_url="https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=600&q=80",
+                precio_venta=145.0, stock_actual=12
+            ),
+            database.Producto(
+                proveedor_id=t1.id, nombre_modelo="Alianza Trenzada Cusco",
+                categoria="Anillos", material_pureza="Plata Ley 950",
+                foto_url="https://images.unsplash.com/photo-1603561591411-07134e71a2a9?w=600&q=80",
+                precio_venta=130.0, stock_actual=8
+            ),
+            database.Producto(
+                proveedor_id=t2.id, nombre_modelo="Anillo Compromiso Imperial",
+                categoria="Anillos", material_pureza="Oro 18k",
+                foto_url="https://images.unsplash.com/photo-1598560917505-59a3ad559071?w=600&q=80",
+                precio_venta=680.0, stock_actual=4
+            ),
+            database.Producto(
+                proveedor_id=t3.id, nombre_modelo="Collar Luna de Plata",
+                categoria="Collares", material_pureza="Plata Ley 950",
+                foto_url="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=600&q=80",
+                precio_venta=195.0, stock_actual=10
+            ),
+        ]
+        db.add_all(modelos_demo)
+        db.commit()
+    db.close()
+
+# --- RUTAS DE PROVEEDORES ---
+@app.get("/proveedores/")
+def listar_proveedores(db: Session = Depends(get_db)):
+    return db.query(database.Proveedor).all()
 
 @app.post("/proveedores/")
 def crear_proveedor(prov: ProveedorCreate, db: Session = Depends(get_db)):
-    db_prov = ProveedorDB(**prov.dict())
-    db.add(db_prov)
+    nuevo = database.Proveedor(**prov.dict())
+    db.add(nuevo)
     db.commit()
-    db.refresh(db_prov)
-    return {"mensaje": "Proveedor registrado", "id": db_prov.id}
-
-@app.get("/proveedores/")
-def listar_proveedores(db: Session = Depends(get_db)):
-    return db.query(ProveedorDB).all()
+    db.refresh(nuevo)
+    return nuevo
 
 @app.delete("/proveedores/{prov_id}")
 def eliminar_proveedor(prov_id: int, db: Session = Depends(get_db)):
-    prov = db.query(ProveedorDB).filter(ProveedorDB.id == prov_id).first()
+    prov = db.query(database.Proveedor).filter(database.Proveedor.id == prov_id).first()
     if not prov:
-        raise HTTPException(status_code=404, detail="No encontrado")
+        raise HTTPException(status_code=404, detail="Proveedor no encontrado")
     db.delete(prov)
     db.commit()
-    return {"mensaje": "Eliminado"}
+    return {"ok": True}
 
-@app.post("/optimizar-presupuesto/")
-def optimizar_por_presupuesto(req: PresupuestoRequest, db: Session = Depends(get_db)):
-    proveedores = db.query(ProveedorDB).all()
-    if not proveedores:
-        raise HTTPException(status_code=400, detail="No hay proveedores registrados.")
+# --- RUTAS DE CATÁLOGO POR TALLER Y TIENDA VIRTUAL ---
+@app.get("/productos/")
+def listar_todos_productos(db: Session = Depends(get_db)):
+    productos = db.query(database.Producto).all()
+    resultado = []
+    for p in productos:
+        resultado.append({
+            "id": p.id,
+            "proveedor_id": p.proveedor_id,
+            "taller_nombre": p.proveedor.nombre if p.proveedor else "Taller Asociado",
+            "costo_taller": p.proveedor.costo_unitario if p.proveedor else 0,
+            "nombre_modelo": p.nombre_modelo,
+            "categoria": p.categoria,
+            "material_pureza": p.material_pureza,
+            "foto_url": p.foto_url,
+            "precio_venta": p.precio_venta,
+            "stock_actual": p.stock_actual
+        })
+    return resultado
 
-    # Asignación de presupuestos por categoría
-    bolsillos = {
-        "Aretes": req.presupuesto_total * (req.porcentaje_aretes / 100.0),
-        "Pulseras": req.presupuesto_total * (req.porcentaje_pulseras / 100.0),
-        "Anillos": req.presupuesto_total * (req.porcentaje_anillos / 100.0),
-        "Collares": req.presupuesto_total * (req.porcentaje_collares / 100.0),
-    }
+@app.get("/proveedores/{prov_id}/productos")
+def listar_productos_por_proveedor(prov_id: int, db: Session = Depends(get_db)):
+    return db.query(database.Producto).filter(database.Producto.proveedor_id == prov_id).all()
 
-    plan_compras = []
-    gasto_total_real = 0.0
-    piezas_totales = 0
+@app.post("/productos/")
+def crear_producto(prod: ProductoCreate, db: Session = Depends(get_db)):
+    prov = db.query(database.Proveedor).filter(database.Proveedor.id == prod.proveedor_id).first()
+    if not prov:
+        raise HTTPException(status_code=404, detail="Taller no encontrado")
+    nuevo_prod = database.Producto(
+        proveedor_id=prod.proveedor_id,
+        nombre_modelo=prod.nombre_modelo,
+        categoria=prod.categoria,
+        material_pureza=prod.material_pureza,
+        foto_url=prod.foto_url,
+        precio_venta=prod.precio_venta,
+        stock_actual=prod.stock_inicial
+    )
+    db.add(nuevo_prod)
+    db.commit()
+    db.refresh(nuevo_prod)
+    return nuevo_prod
 
-    for categoria, dinero_disponible in bolsillos.items():
-        if dinero_disponible <= 0:
-            continue
-        
-        # Filtrar proveedores de esta categoría
-        provs_cat = [p for p in proveedores if p.tipo_joya == categoria]
-        
-        # Ordenar por eficiencia comercial: Menor costo por punto de rotación (Prioriza alta venta y buen precio)
-        provs_ordenados = sorted(provs_cat, key=lambda p: (p.costo_unitario / max(p.nivel_rotacion, 1)))
-        
-        saldo_categoria = dinero_disponible
-        
-        for prov in provs_ordenados:
-            if saldo_categoria < prov.costo_unitario:
-                continue
-            
-            # Cuántas piezas alcanza con el dinero de esta categoría sin pasar la capacidad del taller
-            max_por_dinero = int(saldo_categoria // prov.costo_unitario)
-            cantidad_comprar = min(max_por_dinero, prov.capacidad)
-            
-            if cantidad_comprar > 0:
-                subtotal = cantidad_comprar * prov.costo_unitario
-                plan_compras.append({
-                    "origen": prov.nombre,
-                    "tipo_joya": prov.tipo_joya,
-                    "material_pureza": prov.material_pureza,
-                    "con_grabado": prov.con_grabado,
-                    "nivel_rotacion": prov.nivel_rotacion,
-                    "piezas_asignadas": cantidad_comprar,
-                    "costo_unitario": prov.costo_unitario,
-                    "subtotal": subtotal
-                })
-                saldo_categoria -= subtotal
-                gasto_total_real += subtotal
-                piezas_totales += cantidad_comprar
+# --- RUTA DE COMPRA LOGÍSTICA (ACTUALIZA STOCK DE LA TIENDA VIRTUAL) ---
+@app.post("/compras/")
+def registrar_compra_mercaderia(compra: CompraCreate, db: Session = Depends(get_db)):
+    if compra.cantidad <= 0:
+        raise HTTPException(status_code=400, detail="La cantidad debe ser mayor a 0")
+    prod = db.query(database.Producto).filter(database.Producto.id == compra.producto_id).first()
+    if not prod:
+        raise HTTPException(status_code=404, detail="Modelo de joya no encontrado")
+
+    costo_unit = prod.proveedor.costo_unitario if prod.proveedor else 0.0
+    costo_total = round(costo_unit * compra.cantidad, 2)
+
+    prod.stock_actual += compra.cantidad
+
+    registro = database.CompraLogistica(
+        producto_id=prod.id,
+        cantidad_comprada=compra.cantidad,
+        costo_total=costo_total
+    )
+    db.add(registro)
+    db.commit()
+    db.refresh(prod)
 
     return {
-        "presupuesto_asignado": req.presupuesto_total,
-        "gasto_total_optimizado": gasto_total_real,
-        "saldo_sobrante": req.presupuesto_total - gasto_total_real,
-        "piezas_totales_adquiridas": piezas_totales,
-        "plan_de_abastecimiento": plan_compras
+        "mensaje": f"Se agregaron {compra.cantidad} unidades de '{prod.nombre_modelo}' al inventario",
+        "nuevo_stock": prod.stock_actual,
+        "costo_total": costo_total
+    }
+
+# --- OPTIMIZADOR DE COMPRA INTELIGENTE ---
+@app.post("/optimizar/")
+def optimizar_compra(req: SimulacionRequest, db: Session = Depends(get_db)):
+    proveedores = db.query(database.Proveedor).all()
+    asignaciones = {
+        "Aretes": req.capital * (req.pct_aretes / 100.0),
+        "Pulseras": req.capital * (req.pct_pulseras / 100.0),
+        "Anillos": req.capital * (req.pct_anillos / 100.0),
+        "Collares": req.capital * (req.pct_collares / 100.0),
+    }
+
+    plan = []
+    inversion_total = 0.0
+    total_unidades = 0
+
+    for cat, presupuesto_cat in asignaciones.items():
+        if presupuesto_cat <= 0:
+            continue
+        candidatos = [p for p in proveedores if p.tipo_joya.lower() == cat.lower()]
+        candidatos.sort(key=lambda x: (x.nivel_rotacion / max(x.costo_unitario, 1)), reverse=True)
+
+        saldo_cat = presupuesto_cat
+        for p in candidatos:
+            if saldo_cat < p.costo_unitario:
+                continue
+            max_posible = int(saldo_cat // p.costo_unitario)
+            unidades = min(max_posible, p.capacidad)
+            if unidades > 0:
+                subtotal = round(unidades * p.costo_unitario, 2)
+                saldo_cat -= subtotal
+                inversion_total += subtotal
+                total_unidades += unidades
+                plan.append({
+                    "taller": p.nombre,
+                    "categoria": p.tipo_joya,
+                    "pureza": p.material_pureza,
+                    "unidades": unidades,
+                    "costo_unitario": p.costo_unitario,
+                    "subtotal": subtotal
+                })
+
+    return {
+        "inversion_ejecutada": round(inversion_total, 2),
+        "saldo_remanente": round(req.capital - inversion_total, 2),
+        "total_unidades": total_unidades,
+        "plan": plan
     }

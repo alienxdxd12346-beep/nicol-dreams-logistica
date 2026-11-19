@@ -1,326 +1,484 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nícol Dreams - Inteligencia de Compras & Joyería</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; }
-        .silver-glass { background: rgba(13, 17, 23, 0.85); backdrop-filter: blur(16px); border: 1px solid rgba(226, 232, 240, 0.12); }
-        .silver-gradient { background: linear-gradient(135deg, #161b22 0%, #0d1117 100%); }
-        @media print {
-            header, form, button, .no-print { display: none !important; }
-            body { background: white !important; color: black !important; }
-            .silver-gradient { background: white !important; border: 1px solid #ccc !important; }
-            .text-slate-100, .text-white, .text-slate-300 { color: black !important; }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nícol Dreams | Centro Logístico y Abastecimiento</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #0b0d12; color: #f3f4f6; }
+    .card { background-color: #131722; border: 1px solid #1f2636; border-radius: 1rem; }
+    .input-dark { background-color: #0b0d12; border: 1px solid #262f42; color: #fff; border-radius: 0.6rem; padding: 0.6rem 0.85rem; width: 100%; }
+    .input-dark:focus { outline: none; border-color: #d4af37; }
+  </style>
 </head>
-<body class="bg-[#07090E] text-slate-100 min-h-screen pb-24 md:pb-12">
+<body class="min-h-screen pb-14">
 
-    <header class="border-b border-slate-800/80 sticky top-0 z-50 silver-glass">
-        <div class="max-w-7xl mx-auto px-4 md:px-8 py-3.5 flex items-center justify-between">
-            <div class="flex items-center gap-3.5">
-                <div class="w-12 h-12 rounded-2xl bg-[#111622] border border-slate-700/60 p-1.5 flex items-center justify-center shadow-xl">
-                    <img src="logo.png" alt="Nícol Dreams Logo" class="w-full h-full object-contain rounded-xl">
-                </div>
-                <div>
-                    <h1 class="text-base font-extrabold text-slate-100 tracking-wider">NÍCOL DREAMS</h1>
-                    <p class="text-[10px] text-slate-400 font-medium tracking-widest uppercase">Optimización Presupuestaria & Rotación • Cusco</p>
-                </div>
+  <!-- Barra Superior -->
+  <header class="border-b border-slate-800/80 bg-[#0e1118]/90 backdrop-blur sticky top-0 z-30">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex flex-wrap items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <img src="logo.png" alt="Nícol Dreams" onerror="this.style.display='none'" class="w-10 h-10 rounded-full object-cover border border-amber-500/40" />
+        <div>
+          <h1 class="text-lg font-bold tracking-wide text-white">NÍCOL DREAMS <span class="text-amber-400">LOGÍSTICA</span></h1>
+          <p class="text-xs text-slate-400 tracking-widest uppercase">Optimización Presupuestaria & Abastecimiento • Cusco</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-3">
+        <a href="tienda.html" target="_blank" class="px-4 py-2 rounded-lg bg-amber-500/15 border border-amber-500/40 text-amber-300 text-sm font-semibold hover:bg-amber-500/25 transition">
+          Ver Tienda Virtual Pública ↗
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-6 pt-8 space-y-8">
+    <!-- KPIs -->
+    <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="card p-5">
+        <p class="text-xs uppercase tracking-wider text-slate-400">Capital Disponible</p>
+        <p id="kpiCapital" class="text-3xl font-bold text-white mt-1">S/. 4,000.00</p>
+        <p class="text-xs text-slate-500 mt-1">Presupuesto de inversión</p>
+      </div>
+      <div class="card p-5">
+        <p class="text-xs uppercase tracking-wider text-slate-400">Inversión Ejecutada</p>
+        <p id="kpiInversion" class="text-3xl font-bold text-emerald-400 mt-1">S/. 0.00</p>
+        <p class="text-xs text-slate-500 mt-1">Optimizado por rotación</p>
+      </div>
+      <div class="card p-5">
+        <p class="text-xs uppercase tracking-wider text-slate-400">Saldo Remanente</p>
+        <p id="kpiSaldo" class="text-3xl font-bold text-amber-400 mt-1">S/. 0.00</p>
+        <p class="text-xs text-slate-500 mt-1">Caja chica disponible</p>
+      </div>
+      <div class="card p-5">
+        <p class="text-xs uppercase tracking-wider text-slate-400">Stock en Tienda Virtual</p>
+        <p id="kpiStockTienda" class="text-3xl font-bold text-sky-400 mt-1">0 unid.</p>
+        <p class="text-xs text-slate-500 mt-1">Sincronizado en tiempo real</p>
+      </div>
+    </section>
+
+    <!-- Fila Principal -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      <!-- Formulario Registrar Taller -->
+      <div class="lg:col-span-5 card p-6 space-y-4">
+        <h2 class="text-base font-bold text-white flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span>
+          Registrar Especialidad de Taller
+        </h2>
+        <form id="formTaller" class="space-y-4">
+          <div>
+            <label class="block text-xs text-slate-400 mb-1">Nombre del Taller / Artesano</label>
+            <input type="text" id="nombre" required placeholder="Ej. Juan Orfebrería Cusco" class="input-dark" />
+          </div>
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block text-xs text-slate-400 mb-1">Categoría Principal</label>
+              <select id="tipo_joya" class="input-dark">
+                <option value="Anillos">Anillos</option>
+                <option value="Aretes">Aretes</option>
+                <option value="Pulseras">Pulseras</option>
+                <option value="Collares">Collares</option>
+              </select>
             </div>
-            <button onclick="window.print()" class="no-print bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 px-3.5 py-2 rounded-xl text-xs flex items-center gap-2 transition">
-                <i class="fa-solid fa-print"></i> <span class="hidden sm:inline">Orden de Compra</span>
+            <div>
+              <label class="block text-xs text-slate-400 mb-1">Material y Pureza</label>
+              <select id="material_pureza" class="input-dark">
+                <option value="Plata Ley 950">Plata Ley 950</option>
+                <option value="Plata Ley 925">Plata Ley 925</option>
+                <option value="Oro 18k">Oro 18k</option>
+                <option value="Oro 14k">Oro 14k</option>
+              </select>
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block text-xs text-slate-400 mb-1">Grabado</label>
+              <select id="con_grabado" class="input-dark">
+                <option value="true">Incluido</option>
+                <option value="false">Sin grabado</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs text-slate-400 mb-1">Nivel de Venta (1–10)</label>
+              <input type="number" id="nivel_rotacion" min="1" max="10" value="8" required class="input-dark" />
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block text-xs text-slate-400 mb-1">Stock Máx. (Piezas)</label>
+              <input type="number" id="capacidad" min="1" value="35" required class="input-dark" />
+            </div>
+            <div>
+              <label class="block text-xs text-slate-400 mb-1">Costo Unitario (S/.)</label>
+              <input type="number" step="0.01" id="costo_unitario" min="1" value="85.00" required class="input-dark" />
+            </div>
+          </div>
+          <button type="submit" class="w-full py-3 rounded-xl bg-white text-slate-950 font-bold text-sm hover:bg-amber-300 transition">
+            + Guardar Especialidad de Taller
+          </button>
+        </form>
+      </div>
+
+      <!-- Optimizador + Lista de Talleres -->
+      <div class="lg:col-span-7 space-y-6">
+        <div class="card p-6 space-y-4">
+          <div class="flex items-center justify-between">
+            <h2 class="text-base font-bold text-white">Distribución de Capital por Categoría</h2>
+            <button onclick="calcularOptimo()" class="px-4 py-2 rounded-lg bg-white text-slate-950 text-xs font-bold hover:bg-amber-300 transition">
+              Calcular Compra Inteligente
             </button>
+          </div>
+          <div class="grid grid-cols-2 sm:grid-cols-5 gap-3">
+            <div>
+              <label class="block text-[11px] text-slate-400 mb-1">CAPITAL (S/.)</label>
+              <input type="number" id="capInput" value="4000" class="input-dark text-sm" />
+            </div>
+            <div>
+              <label class="block text-[11px] text-slate-400 mb-1">% ARETES</label>
+              <input type="number" id="pctAretes" value="20" class="input-dark text-sm" />
+            </div>
+            <div>
+              <label class="block text-[11px] text-slate-400 mb-1">% PULSERAS</label>
+              <input type="number" id="pctPulseras" value="15" class="input-dark text-sm" />
+            </div>
+            <div>
+              <label class="block text-[11px] text-slate-400 mb-1">% ANILLOS</label>
+              <input type="number" id="pctAnillos" value="45" class="input-dark text-sm" />
+            </div>
+            <div>
+              <label class="block text-[11px] text-slate-400 mb-1">% COLLARES</label>
+              <input type="number" id="pctCollares" value="20" class="input-dark text-sm" />
+            </div>
+          </div>
+          <div id="resultadoOptimo" class="text-xs text-slate-400 pt-2 border-t border-slate-800/80">
+            Presiona "Calcular Compra Inteligente" para obtener la sugerencia por rotación.
+          </div>
         </div>
-    </header>
 
-    <main class="max-w-7xl mx-auto px-4 md:px-8 mt-8 space-y-8">
+        <!-- Talleres y Acceso a Catálogo Visual -->
+        <div class="card p-6 space-y-4">
+          <div class="flex items-center justify-between">
+            <div>
+              <h2 class="text-base font-bold text-white">Talleres / Vendedores y Catálogo por Fotos</h2>
+              <p class="text-xs text-slate-400">Abre el catálogo de un taller para comprar modelos exactos y actualizar la tienda virtual.</p>
+            </div>
+          </div>
+          <div id="listaTalleres" class="space-y-3">
+            <p class="text-sm text-slate-500">Cargando talleres desde el servidor...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
 
-        <!-- KPIs Financieros -->
-        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
-            <div class="silver-gradient border border-slate-800/80 rounded-3xl p-5 shadow-2xl">
-                <div class="text-[11px] text-slate-400 font-semibold uppercase tracking-wider mb-1">Capital Disponible</div>
-                <div class="text-2xl sm:text-3xl font-black text-slate-100" id="kpiPresupuesto">S/. 4,000.00</div>
-                <div class="text-[10px] text-slate-400 mt-1">Presupuesto de inversión</div>
-            </div>
-            <div class="silver-gradient border border-slate-800/80 rounded-3xl p-5 shadow-2xl">
-                <div class="text-[11px] text-slate-400 font-semibold uppercase tracking-wider mb-1">Inversión Ejecutada</div>
-                <div class="text-2xl sm:text-3xl font-black text-emerald-400" id="kpiGastado">S/. 0.00</div>
-                <div class="text-[10px] text-slate-400 mt-1">Optimizado por rotación</div>
-            </div>
-            <div class="silver-gradient border border-slate-800/80 rounded-3xl p-5 shadow-2xl">
-                <div class="text-[11px] text-slate-400 font-semibold uppercase tracking-wider mb-1">Saldo Remanente</div>
-                <div class="text-2xl sm:text-3xl font-black text-amber-400" id="kpiSobrante">S/. 0.00</div>
-                <div class="text-[10px] text-slate-400 mt-1">Caja chica disponible</div>
-            </div>
-            <div class="silver-gradient border border-slate-800/80 rounded-3xl p-5 shadow-2xl">
-                <div class="text-[11px] text-slate-400 font-semibold uppercase tracking-wider mb-1">Total Joyas</div>
-                <div class="text-2xl sm:text-3xl font-black text-slate-200" id="kpiPiezas">0 <span class="text-xs font-normal text-slate-400">unid.</span></div>
-                <div class="text-[10px] text-slate-400 mt-1">Ingreso a tienda virtual</div>
-            </div>
+  <!-- MODAL: CATÁLOGO VISUAL DEL TALLER Y COMPRA DE STOCK -->
+  <div id="modalCatalogo" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
+    <div class="card w-full max-w-5xl max-h-[90vh] flex flex-col overflow-hidden border-amber-500/30">
+      <!-- Cabecera Modal -->
+      <div class="p-5 border-b border-slate-800 flex items-center justify-between bg-[#0f131d]">
+        <div>
+          <span class="text-[11px] uppercase tracking-widest text-amber-400 font-semibold">Catálogo del Proveedor</span>
+          <h3 id="modalTituloTaller" class="text-xl font-bold text-white">Taller</h3>
+        </div>
+        <button onclick="cerrarModal()" class="px-3 py-1.5 rounded-lg bg-slate-800 text-slate-300 hover:text-white text-sm">✕ Cerrar</button>
+      </div>
+
+      <!-- Filtros por Segmento y Pureza -->
+      <div class="px-5 py-3 bg-[#111520] border-b border-slate-800 flex flex-wrap items-center justify-between gap-3">
+        <div class="flex flex-wrap gap-2" id="filtrosCategoria">
+          <button onclick="filtrarModal('Todos', this)" class="filtro-btn px-3 py-1 rounded-full text-xs font-semibold bg-amber-500 text-slate-950">Todos</button>
+          <button onclick="filtrarModal('Anillos', this)" class="filtro-btn px-3 py-1 rounded-full text-xs font-semibold bg-slate-800 text-slate-300">Anillos</button>
+          <button onclick="filtrarModal('Aretes', this)" class="filtro-btn px-3 py-1 rounded-full text-xs font-semibold bg-slate-800 text-slate-300">Aretes</button>
+          <button onclick="filtrarModal('Pulseras', this)" class="filtro-btn px-3 py-1 rounded-full text-xs font-semibold bg-slate-800 text-slate-300">Pulseras</button>
+          <button onclick="filtrarModal('Collares', this)" class="filtro-btn px-3 py-1 rounded-full text-xs font-semibold bg-slate-800 text-slate-300">Collares</button>
+        </div>
+        <select id="filtroPurezaModal" onchange="renderizarModelosModal()" class="bg-slate-900 border border-slate-700 text-xs text-slate-200 rounded-lg px-3 py-1.5">
+          <option value="Todas">Todas las purezas</option>
+          <option value="Plata Ley 950">Plata Ley 950</option>
+          <option value="Plata Ley 925">Plata Ley 925</option>
+          <option value="Oro 18k">Oro 18k</option>
+          <option value="Oro 14k">Oro 14k</option>
+        </select>
+      </div>
+
+      <!-- Cuerpo Modal: Grid de Modelos + Formulario Nuevo Modelo -->
+      <div class="p-5 overflow-y-auto space-y-6 flex-1">
+        <!-- Modelos Existentes -->
+        <div>
+          <h4 class="text-xs uppercase tracking-wider text-slate-400 mb-3">1. Selecciona el modelo según imagen para comprar e ingresar a tienda</h4>
+          <div id="gridModelosTaller" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"></div>
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-
-            <!-- Columna Izquierda: Registro de Proveedor con Nivel de Rotación -->
-            <div class="lg:col-span-5 space-y-6 no-print">
-                <div class="silver-gradient border border-slate-800/80 rounded-3xl p-6 shadow-2xl">
-                    <h2 class="text-sm font-bold text-slate-100 mb-5 flex items-center gap-2.5">
-                        <span class="w-8 h-8 rounded-xl bg-slate-800 text-slate-200 flex items-center justify-center text-xs border border-slate-700"><i class="fa-solid fa-gem"></i></span>
-                        Registrar Especialidad de Taller
-                    </h2>
-                    
-                    <form id="formProveedor" class="space-y-4">
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-400 mb-1.5">Nombre del Taller / Artesano</label>
-                            <input type="text" id="nombreProv" required class="w-full bg-[#07090E] border border-slate-800 rounded-2xl px-4 py-3 text-xs text-slate-100 focus:border-slate-400 focus:outline-none" placeholder="Ej. Juan (Orfebre San Blas)">
-                        </div>
-
-                        <div class="grid grid-cols-2 gap-3">
-                            <div>
-                                <label class="block text-xs font-semibold text-slate-400 mb-1.5">Categoría de Joya</label>
-                                <select id="tipoJoya" class="w-full bg-[#07090E] border border-slate-800 rounded-2xl px-3 py-3 text-xs text-slate-100 focus:border-slate-400 focus:outline-none">
-                                    <option value="Aretes">Aretes</option>
-                                    <option value="Pulseras">Pulseras</option>
-                                    <option value="Anillos">Anillos</option>
-                                    <option value="Collares">Collares</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label class="block text-xs font-semibold text-slate-400 mb-1.5">Material y Pureza</label>
-                                <select id="materialPureza" class="w-full bg-[#07090E] border border-slate-800 rounded-2xl px-3 py-3 text-xs text-slate-100 focus:border-slate-400 focus:outline-none">
-                                    <option value="Plata Ley 950">Plata Ley 950</option>
-                                    <option value="Plata 925">Plata 925</option>
-                                    <option value="Oro 18K">Oro 18K</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="grid grid-cols-2 gap-3">
-                            <div>
-                                <label class="block text-xs font-semibold text-slate-400 mb-1.5">Grabado</label>
-                                <select id="conGrabado" class="w-full bg-[#07090E] border border-slate-800 rounded-2xl px-3 py-3 text-xs text-slate-100 focus:border-slate-400 focus:outline-none">
-                                    <option value="Sin Grabado">Sin Grabado</option>
-                                    <option value="Incluido">Incluido</option>
-                                    <option value="Personalizado">Personalizado</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label class="block text-xs font-semibold text-slate-400 mb-1.5">Nivel de Venta (1-10)</label>
-                                <input type="number" min="1" max="10" value="8" id="nivelRotacion" required class="w-full bg-[#07090E] border border-slate-800 rounded-2xl px-3 py-3 text-xs text-amber-400 font-bold focus:border-slate-400 focus:outline-none" title="10 = Se vende muy rápido / Alta calidad">
-                            </div>
-                        </div>
-
-                        <div class="grid grid-cols-2 gap-3">
-                            <div>
-                                <label class="block text-xs font-semibold text-slate-400 mb-1.5">Stock Máx. (Piezas)</label>
-                                <input type="number" min="1" id="capacidadProv" required class="w-full bg-[#07090E] border border-slate-800 rounded-2xl px-3 py-3 text-xs text-slate-100 focus:border-slate-400 focus:outline-none" placeholder="Ej. 30">
-                            </div>
-                            <div>
-                                <label class="block text-xs font-semibold text-slate-400 mb-1.5">Costo Unitario (S/.)</label>
-                                <input type="number" step="0.01" min="0.01" id="costoProv" required class="w-full bg-[#07090E] border border-slate-800 rounded-2xl px-3 py-3 text-xs text-slate-100 focus:border-slate-400 focus:outline-none" placeholder="Ej. 45.00">
-                            </div>
-                        </div>
-
-                        <button type="submit" class="w-full bg-slate-200 hover:bg-white text-slate-950 font-bold py-3.5 px-4 rounded-2xl text-xs transition shadow-lg flex items-center justify-center gap-2">
-                            <i class="fa-solid fa-plus"></i> Guardar Especialidad de Taller
-                        </button>
-                    </form>
-                </div>
+        <!-- Agregar Nuevo Modelo con Foto al Taller -->
+        <div class="pt-5 border-t border-slate-800">
+          <h4 class="text-xs uppercase tracking-wider text-amber-400 mb-3">2. Registrar nuevo diseño con foto en este taller</h4>
+          <form id="formNuevoModelo" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-6 gap-3 items-end">
+            <div class="md:col-span-2">
+              <label class="block text-[11px] text-slate-400 mb-1">Nombre del Modelo</label>
+              <input type="text" id="modNombre" required placeholder="Ej. Anillo Corona Plata" class="input-dark text-xs" />
             </div>
-
-            <!-- Columna Derecha: Motor Presupuestario y Matriz -->
-            <div class="lg:col-span-7 space-y-6">
-                
-                <!-- Simulador de Presupuesto y Porcentajes -->
-                <div class="silver-gradient border border-slate-800/80 rounded-3xl p-6 shadow-2xl no-print">
-                    <h2 class="text-sm font-bold text-slate-100 mb-4 flex items-center gap-2">
-                        <i class="fa-solid fa-sliders text-slate-300"></i> Distribución de Capital por Categoría
-                    </h2>
-                    
-                    <div class="grid grid-cols-1 sm:grid-cols-5 gap-3 mb-4">
-                        <div class="sm:col-span-1">
-                            <label class="block text-[10px] text-slate-400 uppercase font-bold mb-1">Capital (S/.)</label>
-                            <input type="number" id="presupuestoInput" value="4000" class="w-full bg-[#07090E] border border-slate-700 rounded-xl px-3 py-2 text-xs font-bold text-emerald-400">
-                        </div>
-                        <div>
-                            <label class="block text-[10px] text-slate-400 uppercase font-bold mb-1">% Aretes</label>
-                            <input type="number" id="pctAretes" value="70" min="0" max="100" class="pct-input w-full bg-[#07090E] border border-slate-800 rounded-xl px-3 py-2 text-xs font-bold text-slate-100">
-                        </div>
-                        <div>
-                            <label class="block text-[10px] text-slate-400 uppercase font-bold mb-1">% Pulseras</label>
-                            <input type="number" id="pctPulseras" value="20" min="0" max="100" class="pct-input w-full bg-[#07090E] border border-slate-800 rounded-xl px-3 py-2 text-xs font-bold text-slate-100">
-                        </div>
-                        <div>
-                            <label class="block text-[10px] text-slate-400 uppercase font-bold mb-1">% Anillos</label>
-                            <input type="number" id="pctAnillos" value="10" min="0" max="100" class="pct-input w-full bg-[#07090E] border border-slate-800 rounded-xl px-3 py-2 text-xs font-bold text-slate-100">
-                        </div>
-                        <div>
-                            <label class="block text-[10px] text-slate-400 uppercase font-bold mb-1">% Collares</label>
-                            <input type="number" id="pctCollares" value="0" min="0" max="100" class="pct-input w-full bg-[#07090E] border border-slate-800 rounded-xl px-3 py-2 text-xs font-bold text-slate-100">
-                        </div>
-                    </div>
-
-                    <div class="flex items-center justify-between pt-2 border-t border-slate-800/80">
-                        <span id="sumaPorcentajeText" class="text-xs font-semibold text-emerald-400">Distribución Total: 100%</span>
-                        <button onclick="calcularCompraOptima()" class="bg-slate-200 hover:bg-white text-slate-950 font-bold px-5 py-2.5 rounded-xl text-xs transition shadow-md">
-                            Calcular Compra Inteligente
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Resultados de Asignación -->
-                <div class="silver-gradient border border-slate-800/80 rounded-3xl p-6 shadow-2xl">
-                    <div class="flex justify-between items-center mb-4">
-                        <h3 class="text-sm font-bold text-slate-100">Plan Óptimo de Adquisición (Calidad / Precio)</h3>
-                    </div>
-                    <div id="tablaMatriz" class="space-y-3">
-                        <p class="text-xs text-slate-500 italic text-center p-4">Calculando distribución...</p>
-                    </div>
-                </div>
-
-                <!-- Catálogo de Talleres y sus Puntuaciones -->
-                <div class="silver-gradient border border-slate-800/80 rounded-3xl p-6 shadow-2xl no-print">
-                    <h3 class="text-sm font-bold text-slate-100 mb-4">Rendimiento por Taller y Categoría</h3>
-                    <div id="listaProveedores" class="space-y-2.5"></div>
-                </div>
-
+            <div>
+              <label class="block text-[11px] text-slate-400 mb-1">Segmento</label>
+              <select id="modCategoria" class="input-dark text-xs">
+                <option value="Anillos">Anillos</option>
+                <option value="Aretes">Aretes</option>
+                <option value="Pulseras">Pulseras</option>
+                <option value="Collares">Collares</option>
+              </select>
             </div>
+            <div>
+              <label class="block text-[11px] text-slate-400 mb-1">Pureza</label>
+              <select id="modPureza" class="input-dark text-xs">
+                <option value="Plata Ley 950">Plata Ley 950</option>
+                <option value="Plata Ley 925">Plata Ley 925</option>
+                <option value="Oro 18k">Oro 18k</option>
+                <option value="Oro 14k">Oro 14k</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-[11px] text-slate-400 mb-1">Precio Venta (S/.)</label>
+              <input type="number" step="0.01" id="modPrecioVenta" required placeholder="150.00" class="input-dark text-xs" />
+            </div>
+            <div>
+              <label class="block text-[11px] text-slate-400 mb-1">Compra Inicial (Unid.)</label>
+              <input type="number" id="modStockInicial" min="0" value="10" required class="input-dark text-xs" />
+            </div>
+            <div class="sm:col-span-2 md:col-span-4">
+              <label class="block text-[11px] text-slate-400 mb-1">URL de Foto (Referencial o propia)</label>
+              <input type="url" id="modFoto" required placeholder="https://images.unsplash.com/..." class="input-dark text-xs" />
+            </div>
+            <div class="sm:col-span-2 md:col-span-2">
+              <button type="submit" class="w-full py-2.5 rounded-lg bg-amber-500 text-slate-950 font-bold text-xs hover:bg-amber-400 transition">
+                + Guardar Modelo y Sumar Stock
+              </button>
+            </div>
+          </form>
         </div>
-    </main>
+      </div>
+    </div>
+  </div>
 
-    <script>
-          const API_URL = "[https://nicol-dreams-logistica.onrender.com](https://nicol-dreams-logistica.onrender.com)";
+  <script>
+    const API_URL = "https://nicol-dreams-logistica.onrender.com";
+    let tallerActivoId = null;
+    let productosTallerActual = [];
+    let categoriaFiltroModal = "Todos";
 
-        // Validar suma de porcentajes en tiempo real
-        document.querySelectorAll('.pct-input').forEach(input => {
-            input.addEventListener('input', () => {
-                const suma = (parseFloat(document.getElementById('pctAretes').value) || 0) +
-                             (parseFloat(document.getElementById('pctPulseras').value) || 0) +
-                             (parseFloat(document.getElementById('pctAnillos').value) || 0) +
-                             (parseFloat(document.getElementById('pctCollares').value) || 0);
-                const label = document.getElementById('sumaPorcentajeText');
-                label.innerText = `Distribución Total: ${suma}%`;
-                label.className = suma === 100 ? "text-xs font-semibold text-emerald-400" : "text-xs font-semibold text-rose-400";
-            });
-        });
+    async function cargarTodo() {
+      await Promise.all([cargarTalleres(), actualizarStockGlobal()]);
+    }
 
-        document.getElementById('formProveedor').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const data = {
-                nombre: document.getElementById('nombreProv').value.trim(),
-                tipo_joya: document.getElementById('tipoJoya').value,
-                material_pureza: document.getElementById('materialPureza').value,
-                con_grabado: document.getElementById('conGrabado').value,
-                capacidad: parseInt(document.getElementById('capacidadProv').value),
-                costo_unitario: parseFloat(document.getElementById('costoProv').value),
-                nivel_rotacion: parseInt(document.getElementById('nivelRotacion').value)
-            };
+    async function actualizarStockGlobal() {
+      try {
+        const res = await fetch(`${API_URL}/productos/`);
+        const productos = await res.json();
+        const total = productos.reduce((acc, p) => acc + (p.stock_actual || 0), 0);
+        document.getElementById("kpiStockTienda").textContent = `${total} unid.`;
+      } catch (e) { console.error(e); }
+    }
 
-            const res = await fetch(`${API_URL}/proveedores/`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data)
-            });
-            if(res.ok) {
-                document.getElementById('formProveedor').reset();
-                cargarProveedores();
-            }
-        });
-
-        async function cargarProveedores() {
-            const res = await fetch(`${API_URL}/proveedores/`);
-            const proveedores = await res.json();
-            const contenedor = document.getElementById('listaProveedores');
-            
-            let html = '';
-            proveedores.forEach(p => {
-                html += `
-                <div class="bg-[#07090E] p-3.5 rounded-2xl border border-slate-900 flex items-center justify-between">
-                    <div>
-                        <div class="flex items-center gap-2">
-                            <span class="text-xs font-bold text-slate-100">${p.nombre}</span>
-                            <span class="bg-slate-800 text-slate-200 text-[10px] px-2 py-0.5 rounded-full">${p.tipo_joya}</span>
-                            <span class="bg-amber-500/10 text-amber-400 border border-amber-500/20 text-[10px] px-2 py-0.5 rounded-full font-bold">★ Rotación: ${p.nivel_rotacion}/10</span>
-                        </div>
-                        <p class="text-[11px] text-slate-400 mt-1">${p.material_pureza} • Stock máx: ${p.capacidad} unid.</p>
-                    </div>
-                    <div class="flex items-center gap-3">
-                        <span class="text-xs font-extrabold text-slate-100">S/. ${p.costo_unitario.toFixed(2)}</span>
-                        <button onclick="eliminarProveedor(${p.id})" class="text-slate-600 hover:text-rose-400 text-xs"><i class="fa-solid fa-trash"></i></button>
-                    </div>
-                </div>`;
-            });
-            contenedor.innerHTML = html;
-            calcularCompraOptima();
+    async function cargarTalleres() {
+      const contenedor = document.getElementById("listaTalleres");
+      try {
+        const res = await fetch(`${API_URL}/proveedores/`);
+        const talleres = await res.json();
+        if (!talleres.length) {
+          contenedor.innerHTML = `<p class="text-sm text-slate-500">Aún no hay talleres registrados.</p>`;
+          return;
         }
+        contenedor.innerHTML = talleres.map(t => `
+          <div class="p-4 rounded-xl bg-[#0e1118] border border-slate-800/90 flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <div class="flex items-center gap-2">
+                <h3 class="font-bold text-white text-sm">${t.nombre}</h3>
+                <span class="text-[11px] px-2 py-0.5 rounded bg-amber-500/15 text-amber-300 border border-amber-500/30">${t.material_pureza}</span>
+              </div>
+              <p class="text-xs text-slate-400 mt-1">
+                Especialidad: <strong class="text-slate-200">${t.tipo_joya}</strong> • Costo Taller: <strong class="text-emerald-400">S/. ${t.costo_unitario.toFixed(2)}</strong> • Rotación: ${t.nivel_rotacion}/10
+              </p>
+            </div>
+            <div class="flex items-center gap-2">
+              <button onclick="abrirCatalogoTaller(${t.id}, '${t.nombre.replace(/'/g, "\\'")}')" class="px-3.5 py-2 rounded-lg bg-amber-500 text-slate-950 font-bold text-xs hover:bg-amber-400 transition">
+                📸 Catálogo y Compra
+              </button>
+              <button onclick="eliminarTaller(${t.id})" class="px-2.5 py-2 rounded-lg bg-red-500/10 text-red-400 hover:bg-red-500/20 text-xs">
+                🗑
+              </button>
+            </div>
+          </div>
+        `).join("");
+      } catch (err) {
+        contenedor.innerHTML = `<p class="text-sm text-red-400">Conectando con Render... espera unos segundos y recarga.</p>`;
+      }
+    }
 
-        async function eliminarProveedor(id) {
-            await fetch(`${API_URL}/proveedores/${id}`, { method: 'DELETE' });
-            cargarProveedores();
-        }
+    document.getElementById("formTaller").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const payload = {
+        nombre: document.getElementById("nombre").value,
+        tipo_joya: document.getElementById("tipo_joya").value,
+        material_pureza: document.getElementById("material_pureza").value,
+        con_grabado: document.getElementById("con_grabado").value === "true",
+        nivel_rotacion: parseInt(document.getElementById("nivel_rotacion").value),
+        capacidad: parseInt(document.getElementById("capacidad").value),
+        costo_unitario: parseFloat(document.getElementById("costo_unitario").value)
+      };
+      await fetch(`${API_URL}/proveedores/`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+      e.target.reset();
+      cargarTalleres();
+    });
 
-        async function calcularCompraOptima() {
-            const pAretes = parseFloat(document.getElementById('pctAretes').value) || 0;
-            const pPulseras = parseFloat(document.getElementById('pctPulseras').value) || 0;
-            const pAnillos = parseFloat(document.getElementById('pctAnillos').value) || 0;
-            const pCollares = parseFloat(document.getElementById('pctCollares').value) || 0;
+    async function eliminarTaller(id) {
+      if (!confirm("¿Eliminar este taller y sus modelos asociados?")) return;
+      await fetch(`${API_URL}/proveedores/${id}`, { method: "DELETE" });
+      cargarTodo();
+    }
 
-            if(pAretes + pPulseras + pAnillos + pCollares !== 100) {
-                alert("La suma de los porcentajes por categoría debe ser exactamente 100%.");
-                return;
-            }
+    async function calcularOptimo() {
+      const capital = parseFloat(document.getElementById("capInput").value) || 0;
+      document.getElementById("kpiCapital").textContent = `S/. ${capital.toLocaleString('es-PE', {minimumFractionDigits: 2})}`;
+      const payload = {
+        capital,
+        pct_aretes: parseFloat(document.getElementById("pctAretes").value) || 0,
+        pct_pulseras: parseFloat(document.getElementById("pctPulseras").value) || 0,
+        pct_anillos: parseFloat(document.getElementById("pctAnillos").value) || 0,
+        pct_collares: parseFloat(document.getElementById("pctCollares").value) || 0
+      };
+      const res = await fetch(`${API_URL}/optimizar/`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json();
+      document.getElementById("kpiInversion").textContent = `S/. ${data.inversion_ejecutada.toFixed(2)}`;
+      document.getElementById("kpiSaldo").textContent = `S/. ${data.saldo_remanente.toFixed(2)}`;
 
-            const payload = {
-                presupuesto_total: parseFloat(document.getElementById('presupuestoInput').value) || 0,
-                porcentaje_aretes: pAretes,
-                porcentaje_pulseras: pPulseras,
-                porcentaje_anillos: pAnillos,
-                porcentaje_collares: pCollares
-            };
+      const box = document.getElementById("resultadoOptimo");
+      if (!data.plan.length) {
+        box.innerHTML = `<p class="text-amber-400">No hay talleres suficientes para cubrir el presupuesto asignado.</p>`;
+        return;
+      }
+      box.innerHTML = data.plan.map(item => `
+        <div class="flex justify-between py-1.5 border-b border-slate-800/60 text-slate-200">
+          <span><strong>${item.unidades}x</strong> ${item.categoria} (${item.pureza}) — <em>${item.taller}</em></span>
+          <span class="text-emerald-400 font-semibold">S/. ${item.subtotal.toFixed(2)}</span>
+        </div>
+      `).join("");
+    }
 
-            const res = await fetch(`${API_URL}/optimizar-presupuesto/`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
-            });
-            const data = await res.json();
+    // --- LÓGICA DEL CATÁLOGO VISUAL POR TALLER ---
+    async function abrirCatalogoTaller(id, nombre) {
+      tallerActivoId = id;
+      document.getElementById("modalTituloTaller").textContent = nombre;
+      const modal = document.getElementById("modalCatalogo");
+      modal.classList.remove("hidden");
+      modal.classList.add("flex");
+      await cargarProductosTaller();
+    }
 
-            document.getElementById('kpiPresupuesto').innerText = `S/. ${data.presupuesto_asignado.toFixed(2)}`;
-            document.getElementById('kpiGastado').innerText = `S/. ${data.gasto_total_optimizado.toFixed(2)}`;
-            document.getElementById('kpiSobrante').innerText = `S/. ${data.saldo_sobrante.toFixed(2)}`;
-            document.getElementById('kpiPiezas').innerText = `${data.piezas_totales_adquiridas} unid.`;
+    function cerrarModal() {
+      const modal = document.getElementById("modalCatalogo");
+      modal.classList.add("hidden");
+      modal.classList.remove("flex");
+    }
 
-            let html = '';
-            data.plan_de_abastecimiento.forEach(item => {
-                html += `
-                <div class="bg-[#07090E] p-4 rounded-2xl border border-slate-900 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                    <div>
-                        <div class="flex items-center gap-2">
-                            <h4 class="text-xs font-bold text-slate-100">${item.origen}</h4>
-                            <span class="text-[10px] bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2 py-0.5 rounded-full font-semibold">Rotación ${item.nivel_rotacion}/10</span>
-                        </div>
-                        <p class="text-[11px] text-slate-400 mt-1">Comprar: <strong class="text-slate-200">${item.tipo_joya}</strong> (${item.material_pureza})</p>
-                    </div>
-                    <div class="flex items-center justify-between sm:justify-end gap-6 border-t sm:border-t-0 pt-2 sm:pt-0 border-slate-900">
-                        <div class="text-left sm:text-right">
-                            <span class="font-bold text-slate-100 bg-slate-800 px-2.5 py-1 rounded-xl text-xs">${item.piezas_asignadas} piezas</span>
-                            <span class="text-[10px] text-slate-500 block mt-0.5">S/. ${item.costo_unitario.toFixed(2)} c/u</span>
-                        </div>
-                        <div class="text-right w-24">
-                            <span class="font-black text-emerald-400 text-sm">S/. ${item.subtotal.toFixed(2)}</span>
-                        </div>
-                    </div>
-                </div>`;
-            });
-            document.getElementById('tablaMatriz').innerHTML = html || '<p class="text-xs text-slate-500 text-center p-4">Presupuesto insuficiente o sin talleres en las categorías elegidas.</p>';
-        }
+    async function cargarProductosTaller() {
+      const res = await fetch(`${API_URL}/proveedores/${tallerActivoId}/productos`);
+      productosTallerActual = await res.json();
+      renderizarModelosModal();
+    }
 
-        cargarProveedores();
-    </script>
+    function filtrarModal(cat, btn) {
+      categoriaFiltroModal = cat;
+      document.querySelectorAll(".filtro-btn").forEach(b => {
+        b.classList.remove("bg-amber-500", "text-slate-950");
+        b.classList.add("bg-slate-800", "text-slate-300");
+      });
+      btn.classList.remove("bg-slate-800", "text-slate-300");
+      btn.classList.add("bg-amber-500", "text-slate-950");
+      renderizarModelosModal();
+    }
+
+    function renderizarModelosModal() {
+      const pureza = document.getElementById("filtroPurezaModal").value;
+      const grid = document.getElementById("gridModelosTaller");
+
+      const filtrados = productosTallerActual.filter(p => {
+        const okCat = categoriaFiltroModal === "Todos" || p.categoria === categoriaFiltroModal;
+        const okPur = pureza === "Todas" || p.material_pureza === pureza;
+        return okCat && okPur;
+      });
+
+      if (!filtrados.length) {
+        grid.innerHTML = `<p class="text-xs text-slate-500 col-span-full py-4">No hay modelos registrados en este segmento. Agrégalo abajo con su foto.</p>`;
+        return;
+      }
+
+      grid.innerHTML = filtrados.map(p => `
+        <div class="rounded-xl bg-[#0c0f17] border border-slate-800 overflow-hidden flex flex-col">
+          <img src="${p.foto_url}" alt="${p.nombre_modelo}" class="w-full h-40 object-cover bg-slate-900" />
+          <div class="p-3.5 flex-1 flex flex-col justify-between space-y-3">
+            <div>
+              <div class="flex items-center justify-between text-[11px] text-amber-400">
+                <span>${p.categoria} • ${p.material_pureza}</span>
+                <span class="px-2 py-0.5 rounded bg-sky-500/15 text-sky-300 font-semibold">Stock Tienda: ${p.stock_actual}</span>
+              </div>
+              <h5 class="font-bold text-white text-sm mt-1">${p.nombre_modelo}</h5>
+              <p class="text-xs text-slate-400">PVP Tienda: <strong class="text-emerald-400">S/. ${p.precio_venta.toFixed(2)}</strong></p>
+            </div>
+            <div class="flex items-center gap-2 pt-2 border-t border-slate-800/80">
+              <input type="number" id="cantCompra_${p.id}" min="1" value="20" class="w-20 bg-slate-900 border border-slate-700 rounded-lg px-2 py-1.5 text-xs text-white text-center" />
+              <button onclick="comprarModelo(${p.id})" class="flex-1 py-1.5 px-2 rounded-lg bg-emerald-500 text-slate-950 font-bold text-xs hover:bg-emerald-400 transition">
+                + Comprar Stock
+              </button>
+            </div>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    async function comprarModelo(productoId) {
+      const cantidad = parseInt(document.getElementById(`cantCompra_${productoId}`).value);
+      if (!cantidad || cantidad <= 0) return alert("Ingresa una cantidad válida.");
+
+      const res = await fetch(`${API_URL}/compras/`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ producto_id: productoId, cantidad })
+      });
+      const data = await res.json();
+      alert(`✅ ${data.mensaje}\nInversión registrada: S/. ${data.costo_total.toFixed(2)}`);
+      await cargarProductosTaller();
+      await actualizarStockGlobal();
+    }
+
+    document.getElementById("formNuevoModelo").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const payload = {
+        proveedor_id: tallerActivoId,
+        nombre_modelo: document.getElementById("modNombre").value,
+        categoria: document.getElementById("modCategoria").value,
+        material_pureza: document.getElementById("modPureza").value,
+        precio_venta: parseFloat(document.getElementById("modPrecioVenta").value),
+        stock_inicial: parseInt(document.getElementById("modStockInicial").value),
+        foto_url: document.getElementById("modFoto").value
+      };
+      await fetch(`${API_URL}/productos/`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+      e.target.reset();
+      await cargarProductosTaller();
+      await actualizarStockGlobal();
+    });
+
+    cargarTodo();
+  </script>
 </body>
 </html>
