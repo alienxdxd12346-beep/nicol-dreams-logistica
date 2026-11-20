@@ -3,86 +3,164 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Nícol Dreams | Alta Joyería en Plata y Oro — Cusco</title>
+  <title>Nícol Dreams | Joyería Artesanal en Plata 950 y Oro 18K — Cusco</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #090a0f; color: #f8fafc; }
     .font-serif-luxury { font-family: 'Cormorant Garamond', serif; }
-    .gold-gradient { background: linear-gradient(135deg, #f3e5ab 0%, #d4af37 50%, #aa8220 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .gold-gradient {
+      background: linear-gradient(135deg, #f5e6ad 0%, #d4af37 50%, #a67c1e 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
   </style>
 </head>
-<body class="min-h-screen flex flex-col">
+<body class="min-h-screen flex flex-col selection:bg-amber-400 selection:text-slate-950">
 
-  <!-- Navbar -->
-  <header class="border-b border-amber-500/15 bg-[#090a0f]/90 backdrop-blur sticky top-0 z-30">
-    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-      <div class="flex items-center gap-3">
+  <!-- Barra Superior -->
+  <header class="border-b border-amber-500/15 bg-[#090a0f]/95 backdrop-blur sticky top-0 z-30">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between gap-4">
+      <a href="#" class="flex items-center gap-3">
         <img src="logo.png" alt="Nícol Dreams" onerror="this.style.display='none'" class="w-11 h-11 rounded-full object-cover border border-amber-400/50" />
         <div>
-          <h1 class="font-serif-luxury text-2xl font-bold tracking-wider gold-gradient">NÍCOL DREAMS</h1>
-          <p class="text-[11px] uppercase tracking-[0.25em] text-slate-400">Joyería Fina • Cusco</p>
+          <h1 class="font-serif-luxury text-2xl font-bold tracking-wider gold-gradient leading-none">NÍCOL DREAMS</h1>
+          <p class="text-[10px] uppercase tracking-[0.28em] text-slate-400 mt-1">Orfebrería & Alta Joyería • Cusco</p>
         </div>
-      </div>
-      <div class="hidden sm:flex items-center gap-6 text-xs text-slate-300">
-        <a href="#catalogo" class="hover:text-amber-300 transition">Colección</a>
+      </a>
+
+      <nav class="hidden md:flex items-center gap-7 text-xs uppercase tracking-widest text-slate-300">
+        <a href="#coleccion" class="hover:text-amber-300 transition">Colección</a>
+        <a href="#anillos-destacados" onclick="seleccionarRapido('Anillos')" class="hover:text-amber-300 transition">Anillos</a>
+        <a href="#oficio" class="hover:text-amber-300 transition">Nuestro Oficio</a>
         <a href="#contacto" class="hover:text-amber-300 transition">Contacto</a>
-        <a href="https://wa.me/51900478982?text=Hola%20N%C3%ADcol%20Dreams,%20quisiera%20consultar%20por%20sus%20joyas" target="_blank" class="px-4 py-2 rounded-full bg-amber-400 text-slate-950 font-semibold hover:bg-amber-300 transition">
-          WhatsApp Directo
-        </a>
-      </div>
+      </nav>
+
+      <a href="https://wa.me/51900478982?text=Hola%20N%C3%ADcol%20Dreams,%20quisiera%20asesor%C3%ADa%20sobre%20sus%20joyas"
+         target="_blank"
+         class="px-4 py-2 rounded-full bg-amber-400 text-slate-950 text-xs font-bold hover:bg-amber-300 transition">
+        WhatsApp 900 478 982
+      </a>
     </div>
   </header>
 
-  <!-- Hero -->
-  <section class="relative py-16 px-6 text-center border-b border-slate-800/60 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-amber-900/20 via-[#090a0f] to-[#090a0f]">
-    <div class="max-w-3xl mx-auto space-y-4">
-      <span class="inline-block px-3 py-1 rounded-full text-xs tracking-widest uppercase border border-amber-400/30 text-amber-300 bg-amber-500/10">
-        Orfebrería Cusqueña Auténtica
-      </span>
-      <h2 class="font-serif-luxury text-4xl sm:text-6xl font-bold text-white leading-tight">
-        Piezas eternas forjadas en <span class="gold-gradient">Plata 950 y Oro 18k</span>
-      </h2>
-      <p class="text-slate-400 text-sm sm:text-base max-w-xl mx-auto">
-        Descubre nuestra selección exclusiva de anillos, collares, aretes y pulseras con disponibilidad actualizada al instante.
+  <!-- Portada Editorial -->
+  <section class="relative py-20 px-6 border-b border-slate-800/70 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-amber-900/20 via-[#090a0f] to-[#090a0f]">
+    <div class="max-w-4xl mx-auto text-center space-y-5">
+      <p class="text-xs uppercase tracking-[0.3em] text-amber-300/90">
+        Hecho a mano en Cusco • Plata Ley 950 & Oro 18K
       </p>
+      <h2 class="font-serif-luxury text-4xl sm:text-6xl font-bold text-white leading-[1.08]">
+        Joyería con alma artesanal y <span class="gold-gradient italic">diseño atemporal</span>
+      </h2>
+      <p class="text-slate-400 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
+        Anillos de compromiso, alianzas, collares, aretes y pulseras elaborados junto a talleres orfebres de la región, con stock sincronizado en tiempo real.
+      </p>
+      <div class="pt-2 flex flex-wrap items-center justify-center gap-3">
+        <a href="#coleccion" class="px-6 py-3 rounded-full bg-amber-400 text-slate-950 text-xs font-bold uppercase tracking-wider hover:bg-amber-300 transition">
+          Explorar Catálogo
+        </a>
+        <a href="#coleccion" onclick="seleccionarRapido('Anillos')" class="px-6 py-3 rounded-full border border-amber-400/40 text-amber-300 text-xs font-semibold uppercase tracking-wider hover:bg-amber-400/10 transition">
+          Ver Anillos & Compromiso
+        </a>
+      </div>
     </div>
   </section>
 
-  <!-- Filtros y Catálogo -->
-  <main id="catalogo" class="max-w-7xl mx-auto px-6 py-12 flex-1 w-full space-y-8">
-    <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-800/80 pb-5">
+  <!-- Catálogo Principal -->
+  <main id="coleccion" class="max-w-7xl mx-auto px-6 py-14 flex-1 w-full space-y-8">
+    <div id="anillos-destacados" class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-slate-800/80 pb-6">
+      <!-- Pestañas de Categoría -->
       <div class="flex flex-wrap gap-2">
-        <button onclick="cambiarCategoria('Todos', this)" class="cat-btn px-4 py-2 rounded-full text-xs font-semibold bg-amber-400 text-slate-950">Todas las Joyas</button>
-        <button onclick="cambiarCategoria('Anillos', this)" class="cat-btn px-4 py-2 rounded-full text-xs font-semibold bg-slate-900 text-slate-300 border border-slate-800">Anillos</button>
-        <button onclick="cambiarCategoria('Collares', this)" class="cat-btn px-4 py-2 rounded-full text-xs font-semibold bg-slate-900 text-slate-300 border border-slate-800">Collares</button>
-        <button onclick="cambiarCategoria('Aretes', this)" class="cat-btn px-4 py-2 rounded-full text-xs font-semibold bg-slate-900 text-slate-300 border border-slate-800">Aretes</button>
-        <button onclick="cambiarCategoria('Pulseras', this)" class="cat-btn px-4 py-2 rounded-full text-xs font-semibold bg-slate-900 text-slate-300 border border-slate-800">Pulseras</button>
+        <button onclick="cambiarCategoria('Todos', this)" class="cat-btn px-4 py-2 rounded-full text-xs font-semibold bg-amber-400 text-slate-950 transition">Todos</button>
+        <button onclick="cambiarCategoria('Anillos', this)" class="cat-btn px-4 py-2 rounded-full text-xs font-semibold bg-slate-900 text-slate-300 border border-slate-800 hover:border-amber-500/40 transition">Anillos</button>
+        <button onclick="cambiarCategoria('Collares', this)" class="cat-btn px-4 py-2 rounded-full text-xs font-semibold bg-slate-900 text-slate-300 border border-slate-800 hover:border-amber-500/40 transition">Collares</button>
+        <button onclick="cambiarCategoria('Aretes', this)" class="cat-btn px-4 py-2 rounded-full text-xs font-semibold bg-slate-900 text-slate-300 border border-slate-800 hover:border-amber-500/40 transition">Aretes</button>
+        <button onclick="cambiarCategoria('Pulseras', this)" class="cat-btn px-4 py-2 rounded-full text-xs font-semibold bg-slate-900 text-slate-300 border border-slate-800 hover:border-amber-500/40 transition">Pulseras</button>
       </div>
-      <select id="filtroMaterial" onchange="renderizarTienda()" class="bg-slate-900 border border-slate-800 text-xs text-slate-200 rounded-full px-4 py-2">
-        <option value="Todos">Todos los materiales</option>
-        <option value="Plata Ley 950">Plata Ley 950</option>
-        <option value="Plata Ley 925">Plata Ley 925</option>
-        <option value="Oro 18k">Oro 18k</option>
-        <option value="Oro 14k">Oro 14k</option>
-      </select>
+
+      <!-- Búsqueda, Pureza y Orden -->
+      <div class="flex flex-wrap items-center gap-2.5">
+        <input type="text" id="buscarModelo" oninput="renderizarTienda()" placeholder="Buscar modelo..."
+               class="bg-slate-900 border border-slate-800 focus:border-amber-400 focus:outline-none text-xs text-white rounded-full px-4 py-2 w-44" />
+        <select id="filtroMaterial" onchange="renderizarTienda()" class="bg-slate-900 border border-slate-800 text-xs text-slate-200 rounded-full px-4 py-2">
+          <option value="Todos">Todas las purezas</option>
+          <option value="Plata Ley 950">Plata Ley 950</option>
+          <option value="Plata Ley 925">Plata Ley 925</option>
+          <option value="Oro 18k">Oro 18k</option>
+          <option value="Oro 14k">Oro 14k</option>
+        </select>
+        <select id="ordenJoyas" onchange="renderizarTienda()" class="bg-slate-900 border border-slate-800 text-xs text-slate-200 rounded-full px-4 py-2">
+          <option value="destacados">Destacados</option>
+          <option value="precio-asc">Precio: Menor a Mayor</option>
+          <option value="precio-desc">Precio: Mayor a Menor</option>
+          <option value="stock-desc">Mayor Stock</option>
+        </select>
+      </div>
     </div>
 
-    <div id="gridTienda" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-      <p class="text-slate-400 text-sm col-span-full text-center py-12">Cargando catálogo de joyas en tiempo real...</p>
+    <p id="contadorResultados" class="text-xs text-slate-400"></p>
+
+    <!-- Grid de Joyas -->
+    <div id="gridTienda" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <p class="text-slate-400 text-sm col-span-full text-center py-12">Cargando colección de joyas...</p>
     </div>
   </main>
 
-  <!-- Footer -->
+  <!-- Sección Editorial: Nuestro Oficio -->
+  <section id="oficio" class="border-t border-slate-800/80 bg-[#0c0f17] py-16 px-6">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="p-6 rounded-2xl bg-[#111520] border border-slate-800/80 space-y-2">
+        <span class="text-amber-400 text-xs uppercase tracking-widest font-semibold">01 • Pureza Certificada</span>
+        <h3 class="font-serif-luxury text-2xl font-bold text-white">Plata 950 y Oro 18K</h3>
+        <p class="text-xs text-slate-400 leading-relaxed">Cada pieza indica su ley y acabado para que elijas con confianza entre piezas diarias, de compromiso o colección.</p>
+      </div>
+      <div class="p-6 rounded-2xl bg-[#111520] border border-slate-800/80 space-y-2">
+        <span class="text-amber-400 text-xs uppercase tracking-widest font-semibold">02 • Talleres Aliados</span>
+        <h3 class="font-serif-luxury text-2xl font-bold text-white">Trabajo con Maestros Joyeros</h3>
+        <p class="text-xs text-slate-400 leading-relaxed">Colaboramos directamente con talleres orfebres para abastecer modelos exactos y mantener el inventario al día.</p>
+      </div>
+      <div class="p-6 rounded-2xl bg-[#111520] border border-slate-800/80 space-y-2">
+        <span class="text-amber-400 text-xs uppercase tracking-widest font-semibold">03 • Atención Directa</span>
+        <h3 class="font-serif-luxury text-2xl font-bold text-white">Pedidos por WhatsApp</h3>
+        <p class="text-xs text-slate-400 leading-relaxed">Consulta tallas, grabados o disponibilidad inmediata escribiendo directamente a nuestro canal oficial.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Modal Detalle de Joya -->
+  <div id="modalJoya" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
+    <div class="bg-[#111520] border border-amber-500/30 rounded-2xl max-w-2xl w-full overflow-hidden grid grid-cols-1 sm:grid-cols-2">
+      <img id="detFoto" src="" alt="" class="w-full h-72 sm:h-full object-cover bg-slate-900" />
+      <div class="p-6 flex flex-col justify-between space-y-4">
+        <div class="space-y-2">
+          <div class="flex items-center justify-between">
+            <span id="detPureza" class="text-xs font-semibold text-amber-300"></span>
+            <button onclick="cerrarDetalle()" class="text-slate-400 hover:text-white text-sm">✕</button>
+          </div>
+          <h3 id="detNombre" class="font-serif-luxury text-3xl font-bold text-white leading-tight"></h3>
+          <p id="detCategoria" class="text-xs uppercase tracking-wider text-slate-400"></p>
+          <p id="detStock" class="text-xs font-semibold pt-1"></p>
+          <p id="detPrecio" class="text-2xl font-bold text-amber-400 pt-2"></p>
+        </div>
+        <a id="detWhatsapp" href="#" target="_blank" class="w-full text-center py-3 rounded-xl bg-amber-400 text-slate-950 font-bold text-xs uppercase tracking-wider hover:bg-amber-300 transition">
+          Solicitar por WhatsApp
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pie de Página -->
   <footer id="contacto" class="border-t border-slate-800/80 bg-[#07080c] py-10 px-6">
     <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
       <div>
-        <p class="font-serif-luxury text-lg font-bold text-amber-400">NÍCOL DREAMS JOYERÍA</p>
-        <p class="mt-1">Cusco, Perú • Envíos seguros a todo el país</p>
+        <p class="font-serif-luxury text-xl font-bold text-amber-400">NÍCOL DREAMS JOYERÍA</p>
+        <p class="mt-1">Cusco, Perú • Catálogo en tiempo real</p>
       </div>
       <div class="text-center sm:text-right space-y-1">
-        <p>Pedidos y atención personalizada: <strong class="text-white">+51 900 478 982</strong></p>
-        <p>Correo de atención: <strong class="text-amber-300">contacto@nicoldreams.pe</strong></p>
+        <p>WhatsApp / Celular: <strong class="text-white">+51 900 478 982</strong></p>
+        <p>Correo: <strong class="text-amber-300">contacto@nicoldreams.pe</strong></p>
       </div>
     </div>
   </footer>
@@ -90,17 +168,40 @@
   <script>
     const API_URL = "https://nicol-dreams-logistica.onrender.com";
     const WHATSAPP_NUMERO = "51900478982";
+
+    const CATALOGO_RESPALDO = [
+      { id: 101, nombre_modelo: "Solitario Inti de Oro 18K", categoria: "Anillos", material_pureza: "Oro 18k", precio_venta: 790, stock_actual: 6, foto_url: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=800&q=80" },
+      { id: 102, nombre_modelo: "Alianza Clásica Valle Sagrado", categoria: "Anillos", material_pureza: "Oro 18k", precio_venta: 620, stock_actual: 8, foto_url: "https://images.unsplash.com/photo-1598560917505-59a3ad559071?w=800&q=80" },
+      { id: 103, nombre_modelo: "Anillo Sello Cusqueño Plata 950", categoria: "Anillos", material_pureza: "Plata Ley 950", precio_venta: 165, stock_actual: 14, foto_url: "https://images.unsplash.com/photo-1603561591411-07134e71a2a9?w=800&q=80" },
+      { id: 104, nombre_modelo: "Anillo Media Alianza Brillante", categoria: "Anillos", material_pureza: "Plata Ley 950", precio_venta: 140, stock_actual: 11, foto_url: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=800&q=80" },
+      { id: 105, nombre_modelo: "Anillo Orgánico Textura Andina", categoria: "Anillos", material_pureza: "Plata Ley 950", precio_venta: 155, stock_actual: 9, foto_url: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=800&q=80" },
+      { id: 106, nombre_modelo: "Collar Gargantilla Killa", categoria: "Collares", material_pureza: "Plata Ley 950", precio_venta: 210, stock_actual: 12, foto_url: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=800&q=80" },
+      { id: 107, nombre_modelo: "Dije Gota de Luz Plata 950", categoria: "Collares", material_pureza: "Plata Ley 950", precio_venta: 185, stock_actual: 7, foto_url: "https://images.unsplash.com/photo-1611085583191-a3b181a88401?w=800&q=80" },
+      { id: 108, nombre_modelo: "Collar Cadena Veneciana 950", categoria: "Collares", material_pureza: "Plata Ley 950", precio_venta: 175, stock_actual: 15, foto_url: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=800&q=80" },
+      { id: 109, nombre_modelo: "Aretes Candonga Oro 18K", categoria: "Aretes", material_pureza: "Oro 18k", precio_venta: 490, stock_actual: 5, foto_url: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=800&q=80" },
+      { id: 110, nombre_modelo: "Topos Esfera Pulida Plata 950", categoria: "Aretes", material_pureza: "Plata Ley 950", precio_venta: 95, stock_actual: 18, foto_url: "https://images.unsplash.com/photo-1630019852942-f89202989a59?w=800&q=80" },
+      { id: 111, nombre_modelo: "Pulsera Eslabón Artesanal", categoria: "Pulseras", material_pureza: "Plata Ley 950", precio_venta: 230, stock_actual: 10, foto_url: "https://images.unsplash.com/photo-1573408301185-9146fe634ad0?w=800&q=80" },
+      { id: 112, nombre_modelo: "Pulsera Rígida Fina Oro 18K", categoria: "Pulseras", material_pureza: "Oro 18k", precio_venta: 740, stock_actual: 4, foto_url: "https://images.unsplash.com/photo-1611652022419-a9419f74343d?w=800&q=80" }
+    ];
+
     let joyas = [];
     let categoriaSeleccionada = "Todos";
 
     async function cargarCatalogo() {
       try {
         const res = await fetch(`${API_URL}/productos/`);
-        joyas = await res.json();
-        renderizarTienda();
+        if (!res.ok) throw new Error("Respuesta no válida");
+        const data = await res.json();
+        joyas = Array.isArray(data) && data.length > 0 ? data : CATALOGO_RESPALDO;
       } catch (e) {
-        document.getElementById("gridTienda").innerHTML = `<p class="text-amber-400 text-sm col-span-full text-center py-10">Despertando servidor de inventario... recarga en unos segundos.</p>`;
+        joyas = CATALOGO_RESPALDO;
       }
+      renderizarTienda();
+    }
+
+    function seleccionarRapido(cat) {
+      const btn = Array.from(document.querySelectorAll(".cat-btn")).find(b => b.textContent.trim() === cat);
+      if (btn) cambiarCategoria(cat, btn);
     }
 
     function cambiarCategoria(cat, btn) {
@@ -114,55 +215,93 @@
       renderizarTienda();
     }
 
+    function linkWhatsapp(j) {
+      const texto = encodeURIComponent(`Hola Nícol Dreams, deseo consultar por la joya "${j.nombre_modelo}" (${j.material_pureza}) a S/. ${Number(j.precio_venta).toFixed(2)}.`);
+      return `https://wa.me/${WHATSAPP_NUMERO}?text=${texto}`;
+    }
+
     function renderizarTienda() {
       const material = document.getElementById("filtroMaterial").value;
+      const busqueda = (document.getElementById("buscarModelo").value || "").toLowerCase().trim();
+      const orden = document.getElementById("ordenJoyas").value;
       const grid = document.getElementById("gridTienda");
 
-      const lista = joyas.filter(j => {
+      let lista = joyas.filter(j => {
         const okCat = categoriaSeleccionada === "Todos" || j.categoria === categoriaSeleccionada;
         const okMat = material === "Todos" || j.material_pureza === material;
-        return okCat && okMat;
+        const okBus = !busqueda || (j.nombre_modelo || "").toLowerCase().includes(busqueda) || (j.material_pureza || "").toLowerCase().includes(busqueda);
+        return okCat && okMat && okBus;
       });
 
+      if (orden === "precio-asc") lista.sort((a, b) => a.precio_venta - b.precio_venta);
+      if (orden === "precio-desc") lista.sort((a, b) => b.precio_venta - a.precio_venta);
+      if (orden === "stock-desc") lista.sort((a, b) => (b.stock_actual || 0) - (a.stock_actual || 0));
+
+      document.getElementById("contadorResultados").textContent = `Mostrando ${lista.length} ${lista.length === 1 ? "pieza" : "piezas"} en el catálogo`;
+
       if (!lista.length) {
-        grid.innerHTML = `<p class="text-slate-500 text-sm col-span-full text-center py-12">No se encontraron joyas en esta categoría.</p>`;
+        grid.innerHTML = `<p class="text-slate-500 text-sm col-span-full text-center py-12">No encontramos piezas con ese filtro.</p>`;
         return;
       }
 
       grid.innerHTML = lista.map(j => {
-        const disponible = j.stock_actual > 0;
-        const mensajeWA = encodeURIComponent(`Hola Nícol Dreams, me interesa adquirir el modelo "${j.nombre_modelo}" (${j.material_pureza}) de S/. ${j.precio_venta.toFixed(2)}. ¿Tienen disponibilidad?`);
-
+        const stock = j.stock_actual || 0;
+        const disponible = stock > 0;
         return `
           <article class="rounded-2xl bg-[#10131c] border border-slate-800/90 overflow-hidden flex flex-col hover:border-amber-500/40 transition group">
-            <div class="relative overflow-hidden">
-              <img src="${j.foto_url}" alt="${j.nombre_modelo}" class="w-full h-60 object-cover group-hover:scale-105 transition duration-500 bg-slate-900" />
+            <div class="relative overflow-hidden cursor-pointer" onclick="abrirDetalle(${j.id})">
+              <img src="${j.foto_url}" alt="${j.nombre_modelo}" class="w-full h-64 object-cover group-hover:scale-105 transition duration-500 bg-slate-900" />
               <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full text-[11px] font-semibold bg-black/75 backdrop-blur text-amber-300 border border-amber-400/30">
                 ${j.material_pureza}
               </span>
               <span class="absolute top-3 right-3 px-2.5 py-1 rounded-full text-[11px] font-semibold ${disponible ? 'bg-emerald-500/90 text-slate-950' : 'bg-red-500/90 text-white'}">
-                ${disponible ? `${j.stock_actual} disponibles` : 'Agotado'}
+                ${disponible ? `${stock} en stock` : 'Agotado'}
               </span>
             </div>
             <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
               <div>
-                <p class="text-[11px] uppercase tracking-wider text-slate-400">${j.categoria}</p>
-                <h3 class="font-serif-luxury text-2xl font-bold text-white mt-0.5">${j.nombre_modelo}</h3>
+                <p class="text-[11px] uppercase tracking-widest text-slate-400">${j.categoria}</p>
+                <h3 onclick="abrirDetalle(${j.id})" class="font-serif-luxury text-2xl font-bold text-white mt-0.5 cursor-pointer hover:text-amber-300 transition">${j.nombre_modelo}</h3>
               </div>
               <div class="pt-3 border-t border-slate-800/80 flex items-center justify-between gap-2">
                 <div>
                   <span class="text-[11px] text-slate-400 block">Precio</span>
-                  <span class="text-lg font-bold text-amber-400">S/. ${j.precio_venta.toFixed(2)}</span>
+                  <span class="text-lg font-bold text-amber-400">S/. ${Number(j.precio_venta).toFixed(2)}</span>
                 </div>
-                <a href="https://wa.me/${WHATSAPP_NUMERO}?text=${mensajeWA}" target="_blank"
-                   class="px-4 py-2.5 rounded-xl text-xs font-bold transition ${disponible ? 'bg-amber-400 text-slate-950 hover:bg-amber-300' : 'bg-slate-800 text-slate-400 hover:bg-slate-700'}">
-                  ${disponible ? 'Pedir por WhatsApp' : 'Consultar Pedido'}
+                <a href="${linkWhatsapp(j)}" target="_blank"
+                   class="px-3.5 py-2.5 rounded-xl text-xs font-bold transition ${disponible ? 'bg-amber-400 text-slate-950 hover:bg-amber-300' : 'bg-slate-800 text-slate-300 hover:bg-slate-700'}">
+                  ${disponible ? 'Comprar por WhatsApp' : 'Consultar'}
                 </a>
               </div>
             </div>
           </article>
         `;
       }).join("");
+    }
+
+    function abrirDetalle(id) {
+      const j = joyas.find(item => item.id === id);
+      if (!j) return;
+      const stock = j.stock_actual || 0;
+      document.getElementById("detFoto").src = j.foto_url;
+      document.getElementById("detFoto").alt = j.nombre_modelo;
+      document.getElementById("detPureza").textContent = j.material_pureza;
+      document.getElementById("detNombre").textContent = j.nombre_modelo;
+      document.getElementById("detCategoria").textContent = `Categoría: ${j.categoria}`;
+      document.getElementById("detStock").textContent = stock > 0 ? `Disponibilidad inmediata: ${stock} unidades` : "Sin stock inmediato (consultar fabricación)";
+      document.getElementById("detStock").className = `text-xs font-semibold pt-1 ${stock > 0 ? 'text-emerald-400' : 'text-amber-400'}`;
+      document.getElementById("detPrecio").textContent = `S/. ${Number(j.precio_venta).toFixed(2)}`;
+      document.getElementById("detWhatsapp").href = linkWhatsapp(j);
+
+      const modal = document.getElementById("modalJoya");
+      modal.classList.remove("hidden");
+      modal.classList.add("flex");
+    }
+
+    function cerrarDetalle() {
+      const modal = document.getElementById("modalJoya");
+      modal.classList.add("hidden");
+      modal.classList.remove("flex");
     }
 
     cargarCatalogo();
