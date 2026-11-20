@@ -15,29 +15,47 @@
       background-clip: text;
       -webkit-text-fill-color: transparent;
     }
+    .slide-fade { animation: fadeSlide 0.65s ease; }
+    @keyframes fadeSlide {
+      from { opacity: 0.35; transform: scale(1.015); }
+      to { opacity: 1; transform: scale(1); }
+    }
   </style>
 </head>
 <body class="min-h-screen flex flex-col selection:bg-amber-400 selection:text-slate-950">
 
-  <!-- Barra Superior -->
+  <!-- Franja Superior de Mensajes Rotativos -->
+  <div class="bg-[#111520] border-b border-amber-500/15 text-[11px] tracking-widest uppercase text-amber-200/90 py-2 px-4">
+    <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
+      <button onclick="cambiarMicroMensaje(-1)" aria-label="Mensaje anterior" class="text-slate-400 hover:text-amber-300 px-1">‹</button>
+      <p id="microMensajeTexto" class="text-center font-medium truncate">
+        Alta Joyería Artesanal desde Cusco • Plata Ley 950 y Oro 18K
+      </p>
+      <button onclick="cambiarMicroMensaje(1)" aria-label="Siguiente mensaje" class="text-slate-400 hover:text-amber-300 px-1">›</button>
+    </div>
+  </div>
+
+  <!-- Barra de Navegación Principal -->
   <header class="border-b border-amber-500/15 bg-[#090a0f]/95 backdrop-blur sticky top-0 z-30">
     <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between gap-4">
       <a href="#" class="flex items-center gap-3">
-        <img src="logo.png" alt="Nícol Dreams" onerror="this.style.display='none'" class="w-11 h-11 rounded-full object-cover border border-amber-400/50" />
+        <img src="logo.png" alt="Logo Nícol Dreams" onerror="this.style.display='none'"
+             class="w-11 h-11 rounded-full object-cover border border-amber-400/50 shadow-sm" />
         <div>
-          <h1 class="font-serif-luxury text-2xl font-bold tracking-wider gold-gradient leading-none">NÍCOL DREAMS</h1>
-          <p class="text-[10px] uppercase tracking-[0.28em] text-slate-400 mt-1">Orfebrería & Alta Joyería • Cusco</p>
+          <span class="font-serif-luxury text-2xl font-bold tracking-wider gold-gradient leading-none block">NÍCOL DREAMS</span>
+          <span class="text-[10px] uppercase tracking-[0.28em] text-slate-400 block mt-1">Joyería Fina • Cusco</span>
         </div>
       </a>
 
       <nav class="hidden md:flex items-center gap-7 text-xs uppercase tracking-widest text-slate-300">
         <a href="#coleccion" class="hover:text-amber-300 transition">Colección</a>
-        <a href="#anillos-destacados" onclick="seleccionarRapido('Anillos')" class="hover:text-amber-300 transition">Anillos</a>
+        <a href="#coleccion" onclick="seleccionarRapido('Anillos')" class="hover:text-amber-300 transition">Anillos</a>
+        <a href="#coleccion" onclick="seleccionarRapido('Collares')" class="hover:text-amber-300 transition">Collares</a>
         <a href="#oficio" class="hover:text-amber-300 transition">Nuestro Oficio</a>
         <a href="#contacto" class="hover:text-amber-300 transition">Contacto</a>
       </nav>
 
-      <a href="https://wa.me/51900478982?text=Hola%20N%C3%ADcol%20Dreams,%20quisiera%20asesor%C3%ADa%20sobre%20sus%20joyas"
+      <a href="https://wa.me/51900478982?text=Hola%20N%C3%ADcol%20Dreams,%20quisiera%20consultar%20por%20sus%20joyas"
          target="_blank"
          class="px-4 py-2 rounded-full bg-amber-400 text-slate-950 text-xs font-bold hover:bg-amber-300 transition">
         WhatsApp 900 478 982
@@ -45,32 +63,29 @@
     </div>
   </header>
 
-  <!-- Portada Editorial -->
-  <section class="relative py-20 px-6 border-b border-slate-800/70 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-amber-900/20 via-[#090a0f] to-[#090a0f]">
-    <div class="max-w-4xl mx-auto text-center space-y-5">
-      <p class="text-xs uppercase tracking-[0.3em] text-amber-300/90">
-        Hecho a mano en Cusco • Plata Ley 950 & Oro 18K
-      </p>
-      <h2 class="font-serif-luxury text-4xl sm:text-6xl font-bold text-white leading-[1.08]">
-        Joyería con alma artesanal y <span class="gold-gradient italic">diseño atemporal</span>
-      </h2>
-      <p class="text-slate-400 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
-        Anillos de compromiso, alianzas, collares, aretes y pulseras elaborados junto a talleres orfebres de la región, con stock sincronizado en tiempo real.
-      </p>
-      <div class="pt-2 flex flex-wrap items-center justify-center gap-3">
-        <a href="#coleccion" class="px-6 py-3 rounded-full bg-amber-400 text-slate-950 text-xs font-bold uppercase tracking-wider hover:bg-amber-300 transition">
-          Explorar Catálogo
-        </a>
-        <a href="#coleccion" onclick="seleccionarRapido('Anillos')" class="px-6 py-3 rounded-full border border-amber-400/40 text-amber-300 text-xs font-semibold uppercase tracking-wider hover:bg-amber-400/10 transition">
-          Ver Anillos & Compromiso
-        </a>
-      </div>
+  <!-- Carrusel Principal de Diapositivas con Logo, Nombre y Mensajes -->
+  <section class="relative w-full h-[460px] sm:h-[540px] overflow-hidden border-b border-slate-800/80 bg-[#0c0f17]">
+    <div id="slideContainer" class="w-full h-full relative">
+      <!-- Renderizado por JavaScript -->
     </div>
+
+    <!-- Flechas Laterales -->
+    <button onclick="moverDiapositiva(-1)" aria-label="Diapositiva anterior"
+            class="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-black/45 hover:bg-black/75 border border-white/15 text-white flex items-center justify-center text-xl transition">
+      ‹
+    </button>
+    <button onclick="moverDiapositiva(1)" aria-label="Siguiente diapositiva"
+            class="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-black/45 hover:bg-black/75 border border-white/15 text-white flex items-center justify-center text-xl transition">
+      ›
+    </button>
+
+    <!-- Indicadores Inferiores (Dots) -->
+    <div id="slideDots" class="absolute bottom-5 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2.5"></div>
   </section>
 
   <!-- Catálogo Principal -->
   <main id="coleccion" class="max-w-7xl mx-auto px-6 py-14 flex-1 w-full space-y-8">
-    <div id="anillos-destacados" class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-slate-800/80 pb-6">
+    <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-slate-800/80 pb-6">
       <!-- Pestañas de Categoría -->
       <div class="flex flex-wrap gap-2">
         <button onclick="cambiarCategoria('Todos', this)" class="cat-btn px-4 py-2 rounded-full text-xs font-semibold bg-amber-400 text-slate-950 transition">Todos</button>
@@ -82,7 +97,7 @@
 
       <!-- Búsqueda, Pureza y Orden -->
       <div class="flex flex-wrap items-center gap-2.5">
-        <input type="text" id="buscarModelo" oninput="renderizarTienda()" placeholder="Buscar modelo..."
+        <input type="text" id="buscarModelo" oninput="renderizarTienda()" placeholder="Buscar joya..."
                class="bg-slate-900 border border-slate-800 focus:border-amber-400 focus:outline-none text-xs text-white rounded-full px-4 py-2 w-44" />
         <select id="filtroMaterial" onchange="renderizarTienda()" class="bg-slate-900 border border-slate-800 text-xs text-slate-200 rounded-full px-4 py-2">
           <option value="Todos">Todas las purezas</option>
@@ -112,19 +127,19 @@
   <section id="oficio" class="border-t border-slate-800/80 bg-[#0c0f17] py-16 px-6">
     <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
       <div class="p-6 rounded-2xl bg-[#111520] border border-slate-800/80 space-y-2">
-        <span class="text-amber-400 text-xs uppercase tracking-widest font-semibold">01 • Pureza Certificada</span>
-        <h3 class="font-serif-luxury text-2xl font-bold text-white">Plata 950 y Oro 18K</h3>
-        <p class="text-xs text-slate-400 leading-relaxed">Cada pieza indica su ley y acabado para que elijas con confianza entre piezas diarias, de compromiso o colección.</p>
+        <span class="text-amber-400 text-xs uppercase tracking-widest font-semibold">01 • Pureza Auténtica</span>
+        <h3 class="font-serif-luxury text-2xl font-bold text-white">Plata Ley 950 & Oro 18K</h3>
+        <p class="text-xs text-slate-400 leading-relaxed">Cada creación especifica su ley y acabado artesanal para acompañarte en momentos únicos o en tu día a día.</p>
       </div>
       <div class="p-6 rounded-2xl bg-[#111520] border border-slate-800/80 space-y-2">
-        <span class="text-amber-400 text-xs uppercase tracking-widest font-semibold">02 • Talleres Aliados</span>
-        <h3 class="font-serif-luxury text-2xl font-bold text-white">Trabajo con Maestros Joyeros</h3>
-        <p class="text-xs text-slate-400 leading-relaxed">Colaboramos directamente con talleres orfebres para abastecer modelos exactos y mantener el inventario al día.</p>
+        <span class="text-amber-400 text-xs uppercase tracking-widest font-semibold">02 • Talleres de Cusco</span>
+        <h3 class="font-serif-luxury text-2xl font-bold text-white">Orfebrería con Identidad</h3>
+        <p class="text-xs text-slate-400 leading-relaxed">Trabajamos junto a talleres especializados para ofrecer piezas cuidadas y actualizar el inventario al instante.</p>
       </div>
       <div class="p-6 rounded-2xl bg-[#111520] border border-slate-800/80 space-y-2">
-        <span class="text-amber-400 text-xs uppercase tracking-widest font-semibold">03 • Atención Directa</span>
-        <h3 class="font-serif-luxury text-2xl font-bold text-white">Pedidos por WhatsApp</h3>
-        <p class="text-xs text-slate-400 leading-relaxed">Consulta tallas, grabados o disponibilidad inmediata escribiendo directamente a nuestro canal oficial.</p>
+        <span class="text-amber-400 text-xs uppercase tracking-widest font-semibold">03 • Atención Personalizada</span>
+        <h3 class="font-serif-luxury text-2xl font-bold text-white">Asesoría Directa por WhatsApp</h3>
+        <p class="text-xs text-slate-400 leading-relaxed">Resuelve dudas sobre tallas, disponibilidad o regalos especiales escribiendo a nuestro canal oficial.</p>
       </div>
     </div>
   </section>
@@ -154,9 +169,12 @@
   <!-- Pie de Página -->
   <footer id="contacto" class="border-t border-slate-800/80 bg-[#07080c] py-10 px-6">
     <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
-      <div>
-        <p class="font-serif-luxury text-xl font-bold text-amber-400">NÍCOL DREAMS JOYERÍA</p>
-        <p class="mt-1">Cusco, Perú • Catálogo en tiempo real</p>
+      <div class="flex items-center gap-3">
+        <img src="logo.png" alt="Nícol Dreams" onerror="this.style.display='none'" class="w-9 h-9 rounded-full object-cover border border-amber-500/30" />
+        <div>
+          <p class="font-serif-luxury text-xl font-bold text-amber-400">NÍCOL DREAMS JOYERÍA</p>
+          <p class="mt-0.5">Cusco, Perú • Stock sincronizado en tiempo real</p>
+        </div>
       </div>
       <div class="text-center sm:text-right space-y-1">
         <p>WhatsApp / Celular: <strong class="text-white">+51 900 478 982</strong></p>
@@ -169,6 +187,114 @@
     const API_URL = "https://nicol-dreams-logistica.onrender.com";
     const WHATSAPP_NUMERO = "51900478982";
 
+    // --- MICRO-MENSAJES SUPERIORES ---
+    const MICRO_MENSAJES = [
+      "Alta Joyería Artesanal desde Cusco • Plata Ley 950 y Oro 18K",
+      "Anillos de Compromiso, Alianzas y Piezas Únicas • Atención al 900 478 982",
+      "Inventario Actualizado en Tiempo Real • Consultas a contacto@nicoldreams.pe"
+    ];
+    let idxMicro = 0;
+
+    function cambiarMicroMensaje(delta) {
+      idxMicro = (idxMicro + delta + MICRO_MENSAJES.length) % MICRO_MENSAJES.length;
+      document.getElementById("microMensajeTexto").textContent = MICRO_MENSAJES[idxMicro];
+    }
+    setInterval(() => cambiarMicroMensaje(1), 5000);
+
+    // --- DIAPOSITIVAS PRINCIPALES CON LOGO Y NOMBRE ---
+    const DIAPOSITIVAS = [
+      {
+        etiqueta: "Nícol Dreams • Colección Principal",
+        tituloLinea1: "TU ESTILO, ELEVADO A",
+        tituloDestacado: "TU MÁXIMA ESENCIA",
+        subtitulo: "Creaciones en Plata Ley 950 y Oro 18K elaboradas con dedicación artesanal en Cusco.",
+        imagen: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=1400&q=80",
+        categoriaDestino: "Todos",
+        textoBoton: "Ver Colección"
+      },
+      {
+        etiqueta: "Nícol Dreams • Momentos Inolvidables",
+        tituloLinea1: "ANILLOS QUE SELLAN",
+        tituloDestacado: "HISTORIAS ETERNAS",
+        subtitulo: "Diseños de compromiso y alianzas con acabados finos y disponibilidad inmediata.",
+        imagen: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=1400&q=80",
+        categoriaDestino: "Anillos",
+        textoBoton: "Explorar Anillos"
+      },
+      {
+        etiqueta: "Nícol Dreams • Orfebrería Cusqueña",
+        tituloLinea1: "LUZ Y ELEGANCIA EN",
+        tituloDestacado: "CADA DETALLE",
+        subtitulo: "Collares, aretes y pulseras seleccionadas para realzar tu presencia cada día.",
+        imagen: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=1400&q=80",
+        categoriaDestino: "Collares",
+        textoBoton: "Ver Collares"
+      }
+    ];
+
+    let slideActual = 0;
+    let intervaloSlide = null;
+
+    function renderizarDiapositiva() {
+      const s = DIAPOSITIVAS[slideActual];
+      const container = document.getElementById("slideContainer");
+      container.innerHTML = `
+        <div class="slide-fade relative w-full h-full">
+          <img src="${s.imagen}" alt="${s.tituloDestacado}" class="w-full h-full object-cover object-center opacity-55" />
+          <div class="absolute inset-0 bg-gradient-to-r from-[#090a0f]/95 via-[#090a0f]/65 to-transparent"></div>
+          <div class="absolute inset-0 max-w-7xl mx-auto px-12 sm:px-16 flex flex-col justify-center">
+            <div class="max-w-xl space-y-4">
+              <div class="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-black/55 border border-amber-400/35 backdrop-blur-sm">
+                <img src="logo.png" alt="Nícol Dreams" onerror="this.style.display='none'" class="w-5 h-5 rounded-full object-cover" />
+                <span class="text-[11px] uppercase tracking-[0.22em] text-amber-300 font-semibold">${s.etiqueta}</span>
+              </div>
+              <h2 class="font-serif-luxury text-3xl sm:text-5xl lg:text-6xl font-bold text-white leading-[1.06] tracking-wide">
+                ${s.tituloLinea1}<br />
+                <span class="gold-gradient">${s.tituloDestacado}</span>
+              </h2>
+              <p class="text-slate-300 text-xs sm:text-sm leading-relaxed max-w-md">
+                ${s.subtitulo}
+              </p>
+              <div class="pt-2 flex flex-wrap items-center gap-3">
+                <a href="#coleccion" onclick="seleccionarRapido('${s.categoriaDestino}')"
+                   class="px-5 py-2.5 rounded-full bg-amber-400 text-slate-950 text-xs font-bold uppercase tracking-wider hover:bg-amber-300 transition">
+                  ${s.textoBoton}
+                </a>
+                <span class="text-xs font-serif-luxury italic text-amber-200/80 tracking-wider">Nícol Dreams • Cusco</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+
+      const dots = document.getElementById("slideDots");
+      dots.innerHTML = DIAPOSITIVAS.map((_, idx) => `
+        <button onclick="irADiapositiva(${idx})" aria-label="Ir a diapositiva ${idx + 1}"
+                class="h-2.5 rounded-full transition-all ${idx === slideActual ? 'w-7 bg-amber-400' : 'w-2.5 bg-white/40 hover:bg-white/70'}"></button>
+      `).join("");
+    }
+
+    function moverDiapositiva(delta) {
+      slideActual = (slideActual + delta + DIAPOSITIVAS.length) % DIAPOSITIVAS.length;
+      renderizarDiapositiva();
+      reiniciarAutoSlide();
+    }
+
+    function irADiapositiva(idx) {
+      slideActual = idx;
+      renderizarDiapositiva();
+      reiniciarAutoSlide();
+    }
+
+    function reiniciarAutoSlide() {
+      if (intervaloSlide) clearInterval(intervaloSlide);
+      intervaloSlide = setInterval(() => {
+        slideActual = (slideActual + 1) % DIAPOSITIVAS.length;
+        renderizarDiapositiva();
+      }, 6000);
+    }
+
+    // --- CATÁLOGO DE JOYAS ---
     const CATALOGO_RESPALDO = [
       { id: 101, nombre_modelo: "Solitario Inti de Oro 18K", categoria: "Anillos", material_pureza: "Oro 18k", precio_venta: 790, stock_actual: 6, foto_url: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=800&q=80" },
       { id: 102, nombre_modelo: "Alianza Clásica Valle Sagrado", categoria: "Anillos", material_pureza: "Oro 18k", precio_venta: 620, stock_actual: 8, foto_url: "https://images.unsplash.com/photo-1598560917505-59a3ad559071?w=800&q=80" },
@@ -304,6 +430,8 @@
       modal.classList.remove("flex");
     }
 
+    renderizarDiapositiva();
+    reiniciarAutoSlide();
     cargarCatalogo();
   </script>
 </body>
